@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('equipment', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_id');
             $table->foreignId('model_id');
+            $table->string('serial');
             $table->string('short_name');
             $table->foreignId('creator_id');
             $table->foreignId('editor_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('type_id')->on('equipment_types')->references('id');
             $table->foreign('model_id')->on('equipment_models')->references('id');
             $table->foreign('creator_id')->on('users')->references('id');
             $table->foreign('editor_id')->on('users')->references('id');

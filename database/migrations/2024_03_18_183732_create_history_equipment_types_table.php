@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('history_equipment_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable();
-            $table->string('name')->nullable();
-            $table->string('phone', 16)->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->foreignId('item_id');
+            $table->foreignId('user_id');
+            $table->text('comment');
+            $table->timestamp('created_at');
 
             $table->foreign('user_id')->on('users')->references('id');
+            $table->foreign('item_id')->on('equipment_types')->references('id');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('history_equipment_types');
     }
 };

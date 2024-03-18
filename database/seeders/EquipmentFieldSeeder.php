@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use App\Modules\Equipment\Models\EquipmentField;
 use App\Modules\Equipment\Models\EquipmentFieldsType;
+use App\Modules\Equipment\Models\EquipmentFieldsValues;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class EquipmentFieldSeeder extends Seeder
 {
@@ -14,7 +16,7 @@ class EquipmentFieldSeeder extends Seeder
      */
     public function run(): void
     {
-        $types = [
+        $fieldsTypes = [
             [
                 'name' => 'Текстовое поле',
                 'code' => 'text'
@@ -42,12 +44,71 @@ class EquipmentFieldSeeder extends Seeder
                 'type_id' => 1,
             ],
         ];
+        $equipmentTypesFields = [
+            [
+                'type_id' => 2,
+                'field_id' => 1,
+            ],
+            [
+                'type_id' => 2,
+                'field_id' => 2,
+            ],
+        ];
+        $equipmentFieldsEquipment = [
+            [
+                'equipment_id' => 1,
+                'field_id' => 1,
+                'value' => '12345',
+            ],
+            [
+                'equipment_id' => 1,
+                'field_id' => 2,
+                'value' => '54321',
+            ],
+            [
+                'equipment_id' => 2,
+                'field_id' => 1,
+                'value' => '12345',
+            ],
+            [
+                'equipment_id' => 2,
+                'field_id' => 2,
+                'value' => '54321',
+            ],
+            [
+                'equipment_id' => 3,
+                'field_id' => 1,
+                'value' => '12345',
+            ],
+            [
+                'equipment_id' => 3,
+                'field_id' => 2,
+                'value' => '54321',
+            ],
+            [
+                'equipment_id' => 4,
+                'field_id' => 1,
+                'value' => '12345',
+            ],
+            [
+                'equipment_id' => 4,
+                'field_id' => 2,
+                'value' => '54321',
+            ],
+        ];
 
-        foreach ($types as $type) {
+        foreach ($fieldsTypes as $type) {
             EquipmentFieldsType::create($type);
         }
         foreach ($fields as $field) {
             EquipmentField::create($field);
+        }
+        foreach ($equipmentTypesFields as $field) {
+            DB::table('equipment_fields_equipment_types')
+                ->insert($field);
+        }
+        foreach ($equipmentFieldsEquipment as $value) {
+            EquipmentFieldsValues::create($value);
         }
     }
 }

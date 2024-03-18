@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('equipment_brands', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->foreignId('creator_id');
             $table->timestamps();
             $table->softDeletes();

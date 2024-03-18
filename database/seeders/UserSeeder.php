@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Client;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -115,10 +116,22 @@ class UserSeeder extends Seeder
             'client' => $rolesIDs['client'],
             'master' => $rolesIDs['master'],
         ];
-
         foreach ($users as $user) {
             $newUser = User::create($user);
             $newUser->assignRole($usersRoles[$user['login']]);
+        }
+
+        $clients = [
+            [
+                'user_id' => 3,
+            ],
+            [
+                'name' => 'Иванов Иван Иванович',
+                'phone' => '+7(999)99-99-99',
+            ],
+        ];
+        foreach ($clients as $client) {
+            Client::create($client);
         }
     }
 }

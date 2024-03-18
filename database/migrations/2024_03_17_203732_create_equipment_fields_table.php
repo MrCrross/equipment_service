@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('equipment_fields', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code')->nullable();
             $table->unsignedTinyInteger('type_id');
             $table->timestamps();
             $table->softDeletes();

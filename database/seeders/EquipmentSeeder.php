@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Modules\Equipment\Models\Equipment;
+use App\Modules\Equipment\Models\EquipmentBrand;
+use App\Modules\Equipment\Models\EquipmentModel;
+use App\Modules\Equipment\Models\EquipmentType;
 use Illuminate\Database\Seeder;
 
 class EquipmentSeeder extends Seeder
@@ -12,6 +15,99 @@ class EquipmentSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $types = [
+            [
+                'name' => 'Чайник',
+            ],
+            [
+                'name' => 'Блендер',
+            ],
+            [
+                'name' => 'Утюг',
+            ],
+            [
+                'name' => 'Принтер',
+            ],
+        ];
+
+        $brands = [
+            [
+                'name' => 'Xiaomi',
+                'creator_id' => 1,
+            ],
+            [
+                'name' => 'Philips',
+                'creator_id' => 1,
+            ],
+            [
+                'name' => 'Bosch',
+                'creator_id' => 1,
+            ],
+            [
+                'name' => 'DEXP',
+                'creator_id' => 1,
+            ],
+            [
+                'name' => 'Redmond',
+                'creator_id' => 1,
+            ],
+            [
+                'name' => 'Aceline',
+                'creator_id' => 1,
+            ],
+        ];
+        $models = [
+            [
+                'name' => 'SB-600A',
+                'type_id' => 2,
+                'brand_id' => 6,
+                'creator_id' => 1,
+            ],
+            [
+                'name' => 'PL-0500',
+                'type_id' => 2,
+                'brand_id' => 4,
+                'creator_id' => 1,
+            ],
+        ];
+        $equipment = [
+            [
+                'model_id' => 1,
+                'serial' => '12351',
+                'short_name' => 'Blender SB-600A',
+                'creator_id' => 1,
+            ],
+            [
+                'model_id' => 1,
+                'serial' => '12352',
+                'short_name' => 'Blender SB-600A',
+                'creator_id' => 1,
+            ],
+            [
+                'model_id' => 2,
+                'serial' => '12351',
+                'short_name' => 'Blender PL-0500',
+                'creator_id' => 1,
+            ],
+            [
+                'model_id' => 2,
+                'serial' => '12352',
+                'short_name' => 'Blender PL-0500',
+                'creator_id' => 1,
+            ],
+        ];
+
+        foreach ($types as $type) {
+            EquipmentType::create($type);
+        }
+        foreach ($brands as $brand) {
+            EquipmentBrand::create($brand);
+        }
+        foreach ($models as $model) {
+            EquipmentModel::create($model);
+        }
+        foreach ($equipment as $eq) {
+            Equipment::create($eq);
+        }
     }
 }
