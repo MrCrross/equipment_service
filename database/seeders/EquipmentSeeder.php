@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Modules\Equipment\Models\Equipment;
-use App\Modules\Equipment\Models\EquipmentBrand;
-use App\Modules\Equipment\Models\EquipmentModel;
-use App\Modules\Equipment\Models\EquipmentType;
+use App\Models\Equipment\Equipment;
+use App\Models\Equipment\EquipmentBrand;
+use App\Models\Equipment\EquipmentModel;
+use App\Models\Equipment\EquipmentType;
 use Illuminate\Database\Seeder;
 
 class EquipmentSeeder extends Seeder

@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Modules\Equipment\Models\EquipmentField;
-use App\Modules\Equipment\Models\EquipmentFieldsType;
-use App\Modules\Equipment\Models\EquipmentFieldsValues;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Equipment\EquipmentField;
+use App\Models\Equipment\EquipmentFieldsType;
+use App\Models\Equipment\EquipmentFieldsValues;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Modules\Orders\Models\EquipmentOrder;
-use App\Modules\Orders\Models\OrdersStatus;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Orders\EquipmentOrder;
+use App\Models\Orders\OrdersStatus;
 use Illuminate\Database\Seeder;
 
 class EquipmentOrdersSeeder extends Seeder

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\SessionModel;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,5 +45,17 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function setLanguage(Request $request): RedirectResponse
+    {
+        $lang = $request->post('language', config('app.locale'));
+        app()->setLocale($lang);
+        SessionModel::setLanguage($lang, session()->getId());
+        if (Auth::check()) {
+            User::find(Auth::id())->update(['language' => $lang]);
+        }
+
+        return redirect($request->header('referer'));
     }
 }

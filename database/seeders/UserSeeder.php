@@ -22,9 +22,16 @@ class UserSeeder extends Seeder
             'users_view',
             'users_view-delete',
             'users_edit',
+            'users_delete',
+            'roles_view',
+            'roles_edit',
+            'roles_delete',
             'equipment_brands_edit',
             'equipment_brands_view',
             'equipment_brands_view-delete',
+            'equipment_types_edit',
+            'equipment_types_view',
+            'equipment_types_view-delete',
             'equipment_models_view',
             'equipment_models_view-delete',
             'equipment_models_edit',
@@ -46,29 +53,26 @@ class UserSeeder extends Seeder
 
         $roles = [
             [
-                'name' => 'root',
-                'user_name' => 'Администратор сервиса',
+                'name' => 'Администратор сервиса',
             ],
             [
-                'name' => 'client',
-                'user_name' => 'Клиент сервиса',
+                'name' => 'Клиент сервиса',
             ],
             [
-                'name' => 'master',
-                'user_name' => 'Мастер сервиса',
+                'name' => 'Мастер сервиса',
             ],
         ];
         // role => permissions
         $rolesPermissions = [
-            'root' => Permission::pluck('id','id')->all(),
-            'client' => Permission::whereIn(
+            'Администратор сервиса' => Permission::pluck('id','id')->all(),
+            'Клиент сервиса' => Permission::whereIn(
                 'name',
                 [
                     'equipment_orders_create'
                 ]
             )
                 ->pluck('id','id'),
-            'master' => Permission::whereIn(
+            'Мастер сервиса' => Permission::whereIn(
                 'name',
                 [
                     'equipment_orders_my_edit',
@@ -112,9 +116,9 @@ class UserSeeder extends Seeder
         ];
         // login => role id
         $usersRoles = [
-            'root' => $rolesIDs['root'],
-            'client' => $rolesIDs['client'],
-            'master' => $rolesIDs['master'],
+            'root' => $rolesIDs['Администратор сервиса'],
+            'client' => $rolesIDs['Клиент сервиса'],
+            'master' => $rolesIDs['Мастер сервиса'],
         ];
         foreach ($users as $user) {
             $newUser = User::create($user);
