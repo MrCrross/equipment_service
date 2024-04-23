@@ -19,6 +19,8 @@
             </ul>
         </div>
     @endif
+
+    <x-template.equipment-field clone="1" :key="0" :fields="$fields_select"></x-template.equipment-field>
     <div class="container mx-auto my-5 bg-gray-50 rounded">
         <div class="py-5 mx-5 flex flex-col justify-center items-center">
             <form action="{{route('equipment.main.store')}}" method="POST">
@@ -51,6 +53,12 @@
                         />
                         <x-text-input type="text" name="serial" :placeholder="__('equipment.fields.main.serial')"></x-text-input>
                     </div>
+                    <div class="mt-4">
+                        <h1 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('equipment.headers.fields.title') }}</h1>
+                        <div class="py-4 flex flex-col justify-items-stretch container-line-UserRole">
+                            <x-template.equipment-field :key="0" :fields="$fields_select"></x-template.equipment-field>
+                        </div>
+                    </div>
                     <div class="mt-2">
                         <x-btn type="submit">{{ __('actions.submit') }}</x-btn>
                     </div>
@@ -59,3 +67,9 @@
         </div>
     </div>
 </x-app-layout>
+<script src="{{asset('js/templates/EquipmentFieldTemplate.js')}}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new EquipmentFieldTemplate();
+    })
+</script>

@@ -5,7 +5,6 @@ class UserRoleTemplate {
     static lineUserRoleClass = 'line-UserRole';
     static lineUserRoleCloneSelector = '#line-clone-UserRole';
 
-
     constructor() {
         UserRoleTemplate.addListeners();
     }

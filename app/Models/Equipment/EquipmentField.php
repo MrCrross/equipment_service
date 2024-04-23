@@ -25,7 +25,8 @@ class EquipmentField extends Model
         $result = collect([
             (object)[
                 'value' => '',
-                'label' => 'Не выбрано'
+                'label' => 'Не выбрано',
+                'code' => ''
             ]
         ]);
 

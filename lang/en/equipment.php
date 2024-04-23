@@ -27,6 +27,7 @@ return [
             'name' => 'Name of the field',
             'type' => 'Type of field',
             'status' => 'Status',
+            'value' => 'Value',
         ],
     ],
     'messages' => [
