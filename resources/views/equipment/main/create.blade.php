@@ -55,7 +55,7 @@
                     </div>
                     <div class="mt-4">
                         <h1 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('equipment.headers.fields.title') }}</h1>
-                        <div class="py-4 flex flex-col justify-items-stretch container-line-UserRole">
+                        <div class="py-4 flex flex-col justify-items-stretch container-line-EquipmentField">
                             <x-template.equipment-field :key="0" :fields="$fields_select"></x-template.equipment-field>
                         </div>
                     </div>

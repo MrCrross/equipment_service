@@ -29,7 +29,8 @@ class EquipmentFieldTemplate {
         }
         if (selects) {
             selects.forEach((select) => {
-                select.addEventListener('change', (event) => EquipmentFieldTemplate.changeInputByCode(event));
+                select.addEventListener('change', (event) => EquipmentFieldTemplate.changeInputByCode(event.target));
+                EquipmentFieldTemplate.changeInputByCode(select)
             });
         }
     }
@@ -56,31 +57,43 @@ class EquipmentFieldTemplate {
         }
     }
 
-    static changeInputByCode(event)
+    static changeInputByCode(element)
     {
-        const line = EquipmentFieldTemplate.getLineEquipmentField(event.target);
-        const code = event.target.selectedOptions[0].getAttribute('data-code');
+        const line = EquipmentFieldTemplate.getLineEquipmentField(element);
+        const code = element.selectedOptions[0].getAttribute('data-code');
+        const inputValue = element.getAttribute('data-value') ?? '';
+        const selectKey = element.getAttribute('data-key') ?? 0;
+        EquipmentFieldTemplate.keyLine = +selectKey
         const inputContainer = line.querySelector('.inputContainer-EquipmentField');
+        const labelInput = line.querySelector('.labelValue-EquipmentField')
         inputContainer.innerHTML = '';
-        inputContainer.append(EquipmentFieldTemplate.createInput(code));
+        if (code) {
+            labelInput.classList.remove('hidden');
+            inputContainer.append(EquipmentFieldTemplate.createInput(code, inputValue, selectKey));
+        } else {
+            labelInput.classList.add('hidden');
+        }
     }
 
     static getClone()
     {
         EquipmentFieldTemplate.keyLine++;
         const clone = document.querySelector(EquipmentFieldTemplate.lineEquipmentFieldCloneSelector).cloneNode(true);
+        const select = clone.querySelector(EquipmentFieldTemplate.selectSelector)
         const addBtn = clone.querySelector(EquipmentFieldTemplate.btnAddLineSelector);
         const removeBtn = clone.querySelector(EquipmentFieldTemplate.btnRemoveLineSelector);
         clone.id = '';
         clone.classList.remove('hidden');
         addBtn.remove();
-        removeBtn.addEventListener('click', (event) => EquipmentFieldTemplate.removeLine(event));
         removeBtn.classList.remove('hidden');
+        select.name = `fields[${EquipmentFieldTemplate.keyLine}][id]`;
+        select.addEventListener('change', (event) => EquipmentFieldTemplate.changeInputByCode(event.target));
+        removeBtn.addEventListener('click', (event) => EquipmentFieldTemplate.removeLine(event));
 
         return clone;
     }
 
-    static createInput(type)
+    static createInput(type, value, key)
     {
         const input = document.createElement('input');
         let className = 'rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50';
@@ -89,7 +102,8 @@ class EquipmentFieldTemplate {
             className = 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm';
         }
         input.className = className;
-        input.name = `fields[${EquipmentFieldTemplate.keyLine}][value]`;
+        input.name = `fields[${key}][value]`;
+        input.value = value;
 
         return input;
     }

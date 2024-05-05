@@ -28,6 +28,14 @@
                 <strong>{{ __('equipment.fields.main.serial') }}</strong>
                 {{ $equipment->serial }}
             </div>
+            @if(!empty($equipment->fields))
+                @foreach($equipment->fields as $field)
+                    <div class="flex flex-col">
+                        <strong>{{ $field->field->name }}</strong>
+                        {{ $field->value }}
+                    </div>
+                @endforeach
+            @endif
             <div class="flex flex-col">
                 <strong>{{ __('equipment.fields.main.creator') }}</strong>
                 {{ $equipment->creator->name }}

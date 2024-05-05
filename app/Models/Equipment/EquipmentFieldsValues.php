@@ -8,11 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EquipmentFieldsValues extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'equipment_fields_equipment';
     protected $guarded = [];
-    public $timestamps = true;
+    public $timestamps = false;
 
     public function field(): BelongsTo
     {

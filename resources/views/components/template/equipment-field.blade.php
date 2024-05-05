@@ -1,6 +1,6 @@
 <div
     @php if(!empty($clone)) { echo 'id="line-clone-EquipmentField"'; } @endphp
-    class="flex flex-row justify-between items-end py-4 line-EquipmentField {{empty($clone) ? '' : 'hidden'}}"
+    class="flex flex-row justify-between items-end gap-2 py-4 line-EquipmentField {{empty($clone) ? '' : 'hidden'}}"
 >
     <div>
         <x-input-label
@@ -14,12 +14,15 @@
             :data="$fields"
             :selected="!empty($fieldID) ? $fieldID : 0"
             :additionalFields="['code']"
+            data-value="{{ !empty($fieldValue) ? $fieldValue : '' }}"
+            data-key="{{$key}}"
             required
         />
     </div>
     <div>
         <x-input-label
             for="field_id"
+            class="hidden labelValue-EquipmentField"
             :value="__('equipment.fields.fields.value')"
         />
         <div class="inputContainer-EquipmentField"></div>

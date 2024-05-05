@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Equipment;
 use App\Http\Controllers\Controller;
 use App\Models\Equipment\Equipment;
 use App\Models\Equipment\EquipmentField;
+use App\Models\Equipment\EquipmentFieldsValues;
 use App\Models\Equipment\EquipmentModel;
 use App\Models\User;
 use App\Traits\FilterTrait;
@@ -106,6 +107,7 @@ class EquipmentController extends Controller
             'model_id' => ['required', 'int', Rule::exists(EquipmentModel::class, 'id')],
             'serial' => ['required', 'string'],
             'short_name' => ['required', 'string'],
+            'fields' => ['array', 'nullable'],
         ]);
         $fields = [
             'model_id' => $request->post('model_id'),
@@ -113,7 +115,18 @@ class EquipmentController extends Controller
             'short_name' => $request->post('short_name'),
             'creator_id' => Auth::id(),
         ];
-        Equipment::create($fields);
+        $equipmentID = Equipment::query()->create($fields)->id;
+        if ($request->filled('fields')) {
+            foreach ($request->post('fields') as $field) {
+                if (!empty($field['id']) && isset($field['value'])) {
+                    EquipmentFieldsValues::query()->create([
+                        'equipment_id' => $equipmentID,
+                        'field_id' => $field['id'],
+                        'value' => $field['value'],
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('equipment.main.index')
             ->with('success', __('equipment.messages.main.store'));
@@ -167,6 +180,7 @@ class EquipmentController extends Controller
             'model_id' => ['required', 'int', Rule::exists(EquipmentModel::class, 'id')],
             'serial' => ['required', 'string'],
             'short_name' => ['required', 'string'],
+            'fields' => ['array', 'nullable'],
         ]);
 
         $fields = [
@@ -175,7 +189,19 @@ class EquipmentController extends Controller
             'short_name' => $request->post('short_name'),
             'editor_id' => Auth::id(),
         ];
-        Equipment::withTrashed()->find($id)->update($fields);
+        $equipmentID = Equipment::withTrashed()->updateOrCreate(['id' => $id], $fields)->id;
+        EquipmentFieldsValues::query()->where('equipment_id', $id)->delete();
+        if ($request->filled('fields')) {
+            foreach ($request->post('fields') as $field) {
+                if (!empty($field['id']) && isset($field['value'])) {
+                    EquipmentFieldsValues::query()->create([
+                        'equipment_id' => $equipmentID,
+                        'field_id' => $field['id'],
+                        'value' => $field['value'],
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('equipment.main.index')
             ->with('success', __('equipment.messages.main.update'));

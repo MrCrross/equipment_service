@@ -22,6 +22,7 @@
 
     <div class="container mx-auto my-5 bg-gray-50 rounded">
         <div class="py-5 mx-5 flex flex-col justify-center items-center">
+            <x-template.equipment-field clone="1" :key="0" :fields="$fields_select"></x-template.equipment-field>
             <form action="{{ route('equipment.main.update', $equipment->id) }}" method="POST">
                 @csrf
                 @method('PATCH')
@@ -61,6 +62,18 @@
                             :value="$equipment->serial"
                             :placeholder="__('equipment.fields.main.serial')"/>
                     </div>
+                    <div class="mt-4">
+                        <h1 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('equipment.headers.fields.title') }}</h1>
+                        <div class="py-4 flex flex-col justify-items-stretch container-line-EquipmentField">
+                            @if(!empty($equipment->fields))
+                                @foreach($equipment->fields as $key => $field)
+                                    <x-template.equipment-field :key="$key" :type="$key" :fieldID="$field->field->id" :fieldValue="$field->value" :fields="$fields_select"></x-template.equipment-field>
+                                @endforeach
+                            @else
+                                <x-template.equipment-field :key="0" :fields="$fields_select"></x-template.equipment-field>
+                            @endif
+                        </div>
+                    </div>
                     <div class="mt-2">
                         <x-btn type="submit">{{ __('actions.submit') }}</x-btn>
                     </div>
@@ -69,3 +82,9 @@
         </div>
     </div>
 </x-app-layout>
+<script src="{{asset('js/templates/EquipmentFieldTemplate.js')}}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new EquipmentFieldTemplate();
+    })
+</script>

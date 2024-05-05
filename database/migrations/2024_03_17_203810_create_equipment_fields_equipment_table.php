@@ -16,8 +16,6 @@ return new class extends Migration
             $table->foreignId('equipment_id');
             $table->foreignId('field_id');
             $table->string('value')->default('');
-            $table->timestamps();
-            $table->softDeletes();
 
             $table->index(['equipment_id', 'field_id']);
             $table->foreign('equipment_id')->on('equipment')->references('id');
