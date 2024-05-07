@@ -64,7 +64,7 @@ return [
     ],
     'headers' => [
         'main' => [
-            'single' => 'Equipments',
+            'single' => 'Equipment',
             'title' => 'Equipment',
             'create' => 'Add a equipment',
             'update' => 'Change the equipment',

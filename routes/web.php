@@ -22,4 +22,5 @@ Route::middleware('locale')->group(function () {
     require __DIR__ . '/auth.php';
     require __DIR__ . '/users.php';
     require __DIR__ . '/equipment.php';
+    require __DIR__ . '/orders.php';
 });

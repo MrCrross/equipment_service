@@ -12,6 +12,11 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    @can('equipment_orders_view')
+                        <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.*')">
+                            {{ __('orders.headers.title') }}
+                        </x-nav-link>
+                    @endcan
                     @can('equipment_view')
                         <x-nav-link :href="route('equipment.main.index')" :active="request()->routeIs('equipment.main.*')">
                             {{ __('equipment.headers.main.title') }}

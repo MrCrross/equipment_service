@@ -56,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $result = collect([
             (object)[
                 'value' => '',
-                'label' => 'Не выбрано'
+                'label' => __('datatable.no_selected')
             ]
         ]);
 

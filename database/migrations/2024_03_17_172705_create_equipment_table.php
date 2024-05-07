@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('creator_id');
             $table->foreignId('editor_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('model_id')->on('equipment_models')->references('id');
             $table->foreign('creator_id')->on('users')->references('id');

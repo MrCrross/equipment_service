@@ -7,26 +7,29 @@ use Illuminate\Http\Request;
 
 trait OrderTrait
 {
-    private static array $orderDefault = [
-        [
-            'label' => 'Не сортировать',
-            'value' => 0
-        ],
-        [
-            'label' => 'По возрастанию',
-            'value' => 1
-        ],
-        [
-            'label' => 'По убыванию',
-            'value' => 2
-        ],
-    ];
+    private static array $orderDefault = [];
 
     private static bool $default = true;
     private static array $defaultOrder = ['name' => 'asc'];
 
     private static function getOrderDefault(): array
     {
+        if (empty(self::$orderDefault)) {
+            self::$orderDefault = [
+                [
+                    'label' => __('datatable.no_sorting'),
+                    'value' => 0
+                ],
+                [
+                    'label' => __('datatable.by_asc'),
+                    'value' => 1
+                ],
+                [
+                    'label' => __('datatable.by_desc'),
+                    'value' => 2
+                ],
+            ];
+        }
         $orderDefault = [];
         foreach (self::$orderDefault as $value) {
             $orderDefault[] = (object)$value;

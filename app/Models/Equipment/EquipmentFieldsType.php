@@ -16,7 +16,7 @@ class EquipmentFieldsType extends Model
         $result = collect([
             (object)[
                 'value' => '',
-                'label' => 'Не выбрано'
+                'label' => __('datatable.no_selected')
             ]
         ]);
 

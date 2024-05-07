@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Equipment extends Model
 {
@@ -34,5 +36,28 @@ class Equipment extends Model
     public function fields(): HasMany
     {
         return $this->hasMany(EquipmentFieldsValues::class, 'equipment_id','id');
+    }
+
+    public static function autocomplete(): Collection
+    {
+        $result = collect([
+            (object)[
+                'value' => '',
+                'label' => __('datatable.no_selected')
+            ]
+        ]);
+
+        return $result->merge(
+            self::query()
+                ->select(
+                    'equipment.id as value',
+                    DB::raw('CONCAT_WS(" ", equipment_types.name, equipment_brands.name, equipment_models.name, equipment.serial) as label')
+                )
+                ->leftJoin('equipment_models', 'equipment_models.id', '=', 'equipment.model_id')
+                ->leftJoin('equipment_types', 'equipment_types.id', '=', 'equipment_models.type_id')
+                ->leftJoin('equipment_brands', 'equipment_brands.id', '=', 'equipment_models.brand_id')
+                ->orderBy('equipment_models.name')
+                ->get()
+        );
     }
 }

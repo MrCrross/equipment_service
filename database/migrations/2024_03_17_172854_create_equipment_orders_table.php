@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('equipment_id');
             $table->foreignId('master_id')->nullable();
-            $table->unsignedTinyInteger('status_id');
+            $table->string('status_code', 20);
             $table->text('description');
-            $table->foreignId('client_id');
+            $table->string('phone')->nullable();
+            $table->string('client_name')->nullable();
+            $table->foreignId('client_id')->nullable();
             $table->foreignId('creator_id');
             $table->foreignId('editor_id')->nullable();
             $table->timestamps();

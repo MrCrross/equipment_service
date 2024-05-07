@@ -16,7 +16,7 @@
         @foreach($defaultOptions as $item)
             <option
                 value="{{$item->value}}"
-                @if((int)$selected === $item->value) selected @endif
+                @if($selected == $item->value) selected @endif
                 @foreach($additionalFields as $field)
                     data-{{$field}}="{{$item->$field}}"
                 @endforeach

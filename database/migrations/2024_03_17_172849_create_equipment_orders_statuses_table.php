@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('equipment_orders_statuses', function (Blueprint $table) {
             $table->tinyIncrements('id');
             $table->string('name');
+            $table->string('code', 20);
+            $table->string('locale', 10);
         });
     }
 
