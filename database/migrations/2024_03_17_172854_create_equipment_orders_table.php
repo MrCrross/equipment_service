@@ -29,7 +29,7 @@ return new class extends Migration
             $table->foreign('creator_id')->on('users')->references('id');
             $table->foreign('editor_id')->on('users')->references('id');
             $table->foreign('master_id')->on('users')->references('id');
-            $table->foreign('client_id')->on('clients')->references('id');
+            $table->foreign('client_id')->on('users')->references('id');
         });
     }
 

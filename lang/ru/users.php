@@ -9,6 +9,8 @@ return [
         'confirm_password' => 'Подтвердите пароль',
         'email' => 'Адрес электронной почты',
         'status' => 'Статус',
+        'current_password' => 'Текущий пароль',
+        'new_password' => 'Новый пароль',
     ],
     'messages' => [
         'store' => 'Пользователь добавлен успешно',

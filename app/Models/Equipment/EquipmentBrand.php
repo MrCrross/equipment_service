@@ -3,14 +3,18 @@
 namespace App\Models\Equipment;
 
 use App\Models\User;
+use App\Traits\HistoryModelTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
+use Panoscape\History\HasHistories;
 
 class EquipmentBrand extends Model
 {
     use SoftDeletes;
+    use HasHistories;
+    use HistoryModelTrait;
 
     protected $table = 'equipment_brands';
     protected $guarded = [];
@@ -36,5 +40,19 @@ class EquipmentBrand extends Model
                 ->orderBy('name')
                 ->get()
         );
+    }
+
+    public function getModelLabel(): string
+    {
+        return $this->name;
+    }
+
+    public function historyMetaFields(): array
+    {
+        return [
+            'name' => [
+                'name' => __('equipment.fields.brands.name'),
+            ],
+        ];
     }
 }

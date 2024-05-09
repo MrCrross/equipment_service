@@ -9,7 +9,7 @@
             </div>
         </div>
     </x-slot>
-    <div class="container mx-auto my-5 bg-gray-50 rounded flex flex-row justify-center items-center">
+    <div class="container mx-auto my-5 bg-gray-50 rounded flex flex-col justify-center items-center">
         @if ($message = Session::get('success'))
             <div class="w-full px-10 py-5 bg-green-500">
                 <p>{{ $message }}</p>
@@ -68,5 +68,6 @@
                 @endcanany
             @endif
         </div>
+        <x-history-table :history="$history"></x-history-table>
     </div>
 </x-app-layout>

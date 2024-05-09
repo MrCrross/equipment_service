@@ -104,9 +104,11 @@ class EquipmentBrandsController extends Controller
     public function show(int $id): Response
     {
         $brand = EquipmentBrand::query()->with('creator')->withTrashed()->find($id);
+        $history = $brand->getHistory();
 
         return response()->view('equipment.brands.show', [
             'brand' => $brand,
+            'history' => $history,
         ]);
     }
 
@@ -170,9 +172,7 @@ class EquipmentBrandsController extends Controller
      */
     public function recovery(int $id): RedirectResponse
     {
-        EquipmentBrand::withTrashed()->where('id', '=', $id)->update([
-            'deleted_at' => null,
-        ]);
+        EquipmentBrand::withTrashed()->find($id)->restore();
 
         return redirect()->route('equipment.brands.show', $id)
             ->with('success', __('equipment.messages.brands.recovery'));

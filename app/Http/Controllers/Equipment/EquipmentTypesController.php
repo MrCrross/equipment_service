@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Equipment;
 
 use App\Http\Controllers\Controller;
 use App\Models\Equipment\EquipmentType;
-use App\Models\User;
 use App\Traits\FilterTrait;
 use App\Traits\OrderTrait;
 use Illuminate\Http\RedirectResponse;
@@ -12,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+
 class EquipmentTypesController extends Controller
 {
     use FilterTrait;
@@ -98,9 +98,11 @@ class EquipmentTypesController extends Controller
     public function show(int $id): Response
     {
         $type = EquipmentType::query()->withTrashed()->find($id);
+        $history = $type->getHistory();
 
         return response()->view('equipment.types.show', [
             'type' => $type,
+            'history' => $history,
         ]);
     }
 
@@ -164,9 +166,8 @@ class EquipmentTypesController extends Controller
      */
     public function recovery(int $id): RedirectResponse
     {
-        EquipmentType::withTrashed()->where('id', '=', $id)->update([
-            'deleted_at' => null,
-        ]);
+        $type = EquipmentType::withTrashed()->find($id);
+        $type->restore();
 
         return redirect()->route('equipment.types.show', $id)
             ->with('success', __('equipment.messages.types.recovery'));

@@ -52,5 +52,6 @@
                 @endcanany
             @endif
         </div>
+        <x-history-table :history="$history"></x-history-table>
     </div>
 </x-app-layout>

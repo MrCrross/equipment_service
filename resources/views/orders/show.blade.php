@@ -5,15 +5,19 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight ">{{ __('orders.headers.view') }}</h2>
             </div>
             <div class="float-right">
-                <x-a href="{{ route('orders.index') }}">{{ __('actions.back') }}</x-a>
+                @can('equipment_orders_view')
+                    <x-a href="{{ route('orders.index') }}">{{ __('actions.back') }}</x-a>
+                @else
+                    <x-a href="{{ route('dashboard') }}">{{ __('actions.back') }}</x-a>
+                @endcan
             </div>
         </div>
     </x-slot>
-    <div class="container mx-auto flex justify-center items-center my-5 bg-gray-50 rounded">
+    <div class="container mx-auto flex flex-col justify-center items-center my-5 bg-gray-50 rounded">
         <div class="py-5 mx-5">
             <div class="flex flex-col">
                 <strong>{{ __('equipment.headers.main.single') }}</strong>
-                {{ $order->equipment->model->type->name . ' ' . $order->equipment->model->brand->name . ' ' . $order->equipment->model->name }}
+                {{ $order->equipment->model->type->name . ' ' . $order->equipment->model->brand->name . ' ' . $order->equipment->model->name . ' ' . $order->equipment->serial }}
             </div>
             <div class="flex flex-col">
                 <strong>{{ __('orders.fields.status') }}</strong>
@@ -71,5 +75,6 @@
                 @endcanany
             @endif
         </div>
+        <x-history-table :history="$history"></x-history-table>
     </div>
 </x-app-layout>

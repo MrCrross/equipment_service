@@ -93,6 +93,8 @@ return [
         ],
         'fields' => [
             'single' => 'Field of equipment',
+            'type' => 'Type of field equipment',
+            'value' => 'Value of field equipment',
             'title' => 'Fields of equipment',
             'create' => 'Add a field of equipment',
             'update' => 'Change the field of equipment',

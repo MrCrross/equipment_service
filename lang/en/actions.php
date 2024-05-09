@@ -10,4 +10,7 @@ return [
     'register' => 'Register',
     'back' => 'Back',
     'recovery' => 'Recovery',
+    'delete' => 'Delete',
+    'cancel' => 'Cancel',
+    'add' => 'Add',
 ];

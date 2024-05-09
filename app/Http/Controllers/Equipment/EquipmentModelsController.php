@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+
 class EquipmentModelsController extends Controller
 {
     use FilterTrait;
@@ -125,9 +126,11 @@ class EquipmentModelsController extends Controller
     public function show(int $id): Response
     {
         $model = EquipmentModel::query()->with(['creator', 'brand', 'type'])->withTrashed()->find($id);
+        $history = $model->getHistory();
 
         return response()->view('equipment.models.show', [
             'model' => $model,
+            'history' => $history,
         ]);
     }
 
@@ -197,9 +200,8 @@ class EquipmentModelsController extends Controller
      */
     public function recovery(int $id): RedirectResponse
     {
-        EquipmentModel::withTrashed()->where('id', '=', $id)->update([
-            'deleted_at' => null,
-        ]);
+        $model = EquipmentModel::withTrashed()->find($id);
+        $model->restore();
 
         return redirect()->route('equipment.models.show', $id)
             ->with('success', __('equipment.messages.models.recovery'));

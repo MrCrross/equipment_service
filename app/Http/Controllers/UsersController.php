@@ -136,9 +136,11 @@ class UsersController extends Controller
     public function show(int $id): Response
     {
         $user = User::withTrashed()->find($id);
+        $history = $user->getHistory();
 
         return response()->view('users.show', [
             'user' => $user,
+            'history' => $history,
         ]);
     }
 
@@ -219,9 +221,7 @@ class UsersController extends Controller
      */
     public function recovery(int $id): RedirectResponse
     {
-        User::withTrashed()->where('id', '=', $id)->update([
-            'deleted_at' => null,
-        ]);
+        User::withTrashed()->find($id)->restore();
 
         return redirect()->route('users.show', $id)
             ->with('success', __('users.messages.recovery'));

@@ -10,6 +10,8 @@ return [
         'email' => 'Email',
         'roles' => 'Roles',
         'status' => 'Status',
+        'current_password' => 'Current password',
+        'new_password' => 'New password',
     ],
     'messages' => [
         'store' => 'User added successfully',

@@ -142,9 +142,11 @@ class EquipmentController extends Controller
     public function show(int $id): Response
     {
         $equipment = Equipment::query()->with(['model.brand', 'model.type', 'fields.field', 'creator', 'editor'])->withTrashed()->find($id);
+        $history = $equipment->getHistory();
 
         return response()->view('equipment.main.show', [
             'equipment' => $equipment,
+            'history' => $history,
         ]);
     }
 
@@ -228,9 +230,7 @@ class EquipmentController extends Controller
      */
     public function recovery(int $id): RedirectResponse
     {
-        Equipment::withTrashed()->where('id', '=', $id)->update([
-            'deleted_at' => null,
-        ]);
+        Equipment::withTrashed()->find($id)->restore();
 
         return redirect()->route('equipment.main.show', $id)
             ->with('success', __('equipment.messages.main.recovery'));

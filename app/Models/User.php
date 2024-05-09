@@ -2,17 +2,26 @@
 
 namespace App\Models;
 
+use App\Traits\HistoryModelTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
+use Panoscape\History\HasHistories;
+use Panoscape\History\HasOperations;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasRoles, SoftDeletes;
+    use HasFactory;
+    use Notifiable;
+    use HasRoles;
+    use SoftDeletes;
+    use HasOperations;
+    use HasHistories;
+    use HistoryModelTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -66,5 +75,28 @@ class User extends Authenticatable implements MustVerifyEmail
                 ->orderBy('name')
                 ->get()
         );
+    }
+
+    public function getModelLabel(): string
+    {
+        return $this->email;
+    }
+
+    public function historyMetaFields(): array
+    {
+        return [
+            'name' => [
+                'name' => __('users.fields.name'),
+            ],
+            'phone' => [
+                'name' => __('users.fields.phone'),
+            ],
+            'login' => [
+                'name' => __('users.fields.login'),
+            ],
+            'email' => [
+                'name' => __('users.fields.email'),
+            ],
+        ];
     }
 }

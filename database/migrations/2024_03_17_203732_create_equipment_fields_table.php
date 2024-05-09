@@ -14,11 +14,9 @@ return new class extends Migration
         Schema::create('equipment_fields', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedTinyInteger('type_id');
+            $table->string('type_code', 20);
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('type_id')->on('equipment_fields_types')->references('id');
         });
     }
 

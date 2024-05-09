@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+
 class EquipmentFieldsController extends Controller
 {
     use FilterTrait;
@@ -86,11 +87,11 @@ class EquipmentFieldsController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', Rule::unique(EquipmentField::class, 'name')],
-            'type_id' => ['required', 'integer', Rule::exists(EquipmentFieldsType::class, 'id')],
+            'type_code' => ['required', 'string', Rule::exists(EquipmentFieldsType::class, 'code')],
         ]);
         $fields = [
             'name' => $request->post('name'),
-            'type_id' => $request->post('type_id'),
+            'type_code' => $request->post('type_code'),
         ];
         EquipmentField::create($fields);
 
@@ -108,9 +109,11 @@ class EquipmentFieldsController extends Controller
     public function show(int $id): Response
     {
         $field = EquipmentField::query()->with(['type'])->withTrashed()->find($id);
+        $history = $field->getHistory();
 
         return response()->view('equipment.fields.show', [
             'field' => $field,
+            'history' => $history,
         ]);
     }
 
@@ -143,12 +146,12 @@ class EquipmentFieldsController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', Rule::unique(EquipmentField::class, 'name')->ignore($id)],
-            'type_id' => ['required', 'integer', Rule::exists(EquipmentFieldsType::class, 'id')],
+            'type_code' => ['required', 'string', Rule::exists(EquipmentFieldsType::class, 'code')],
         ]);
 
         $fields = [
             'name' => $request->post('name'),
-            'type_id' => $request->post('type_id'),
+            'type_code' => $request->post('type_code'),
         ];
         EquipmentField::withTrashed()->find($id)->update($fields);
 
@@ -177,9 +180,8 @@ class EquipmentFieldsController extends Controller
      */
     public function recovery(int $id): RedirectResponse
     {
-        EquipmentField::withTrashed()->where('id', '=', $id)->update([
-            'deleted_at' => null,
-        ]);
+        $field = EquipmentField::withTrashed()->find($id);
+        $field->restore();
 
         return redirect()->route('equipment.fields.show', $id)
             ->with('success', __('equipment.messages.fields.recovery'));
