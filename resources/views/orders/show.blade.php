@@ -28,6 +28,10 @@
                 @endif
             </div>
             <div class="flex flex-col">
+                <strong>{{ __('orders.fields.price') }}</strong>
+                {{$order->price}}
+            </div>
+            <div class="flex flex-col">
                 <strong>{{ __('orders.fields.master') }}</strong>
                 @if(empty($order->master))
                     <x-no-data font="1"></x-no-data>

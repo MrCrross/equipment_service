@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('master_id')->nullable();
             $table->string('status_code', 20);
             $table->text('description');
+            $table->decimal('price');
             $table->string('phone')->nullable();
             $table->string('client_name')->nullable();
             $table->foreignId('client_id')->nullable();
@@ -30,6 +31,7 @@ return new class extends Migration
             $table->foreign('editor_id')->on('users')->references('id');
             $table->foreign('master_id')->on('users')->references('id');
             $table->foreign('client_id')->on('users')->references('id');
+            $table->foreign('status_code')->on('equipment_orders_statuses')->references('code');
         });
     }
 

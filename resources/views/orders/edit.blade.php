@@ -105,6 +105,23 @@
                             :placeholder="__('orders.fields.description')"
                         >{{$order->description}}</x-textarea>
                     </div>
+                    <div class="flex flex-col">
+                        <x-input-label
+                            for="price"
+                            :value="__('orders.fields.price')"
+                        />
+                        <x-text-input
+                            id="price"
+                            name="price"
+                            type="number"
+                            class="mt-1 block w-full"
+                            min="0.00"
+                            step="0.01"
+                            :value="$order->price"
+                            :placeholder="__('orders.fields.price')"
+                            required
+                        />
+                    </div>
                     <div class="mt-2">
                         <x-btn type="submit">{{ __('actions.submit') }}</x-btn>
                     </div>

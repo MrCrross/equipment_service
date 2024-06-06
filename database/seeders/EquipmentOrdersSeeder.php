@@ -20,6 +20,21 @@ class EquipmentOrdersSeeder extends Seeder
                 'locale' => 'ru',
             ],
             [
+                'name' => 'Диагностика',
+                'code' => 'diagnostic',
+                'locale' => 'ru',
+            ],
+            [
+                'name' => 'Согласование ремонта',
+                'code' => 'approval',
+                'locale' => 'ru',
+            ],
+            [
+                'name' => 'Согласован',
+                'code' => 'signed',
+                'locale' => 'ru',
+            ],
+            [
                 'name' => 'Принято',
                 'code' => 'accepted',
                 'locale' => 'ru',
@@ -31,7 +46,17 @@ class EquipmentOrdersSeeder extends Seeder
             ],
             [
                 'name' => 'Завершено',
+                'code' => 'completed',
+                'locale' => 'ru',
+            ],
+            [
+                'name' => 'Закрыто',
                 'code' => 'closed',
+                'locale' => 'ru',
+            ],
+            [
+                'name' => 'Отменено',
+                'code' => 'canceled',
                 'locale' => 'ru',
             ],
             [
@@ -45,6 +70,21 @@ class EquipmentOrdersSeeder extends Seeder
                 'locale' => 'en',
             ],
             [
+                'name' => 'Diagnostics',
+                'code' => 'diagnostic',
+                'locale' => 'en',
+            ],
+            [
+                'name' => 'Approval of repairs',
+                'code' => 'approval',
+                'locale' => 'en',
+            ],
+            [
+                'name' => 'Agreed',
+                'code' => 'signed',
+                'locale' => 'en',
+            ],
+            [
                 'name' => 'Accepted',
                 'code' => 'accepted',
                 'locale' => 'en',
@@ -55,8 +95,18 @@ class EquipmentOrdersSeeder extends Seeder
                 'locale' => 'en',
             ],
             [
+                'name' => 'Completed',
+                'code' => 'completed',
+                'locale' => 'en',
+            ],
+            [
                 'name' => 'Closed',
                 'code' => 'closed',
+                'locale' => 'en',
+            ],
+            [
+                'name' => 'Canceled',
+                'code' => 'canceled',
                 'locale' => 'en',
             ],
             [
@@ -70,6 +120,7 @@ class EquipmentOrdersSeeder extends Seeder
                 'equipment_id' => 1,
                 'master_id' => 2,
                 'status_code' => 'draft',
+                'price' => 0,
                 'description' => 'Всему капут. Движка нет. Крышки нет. Курбурятор сгарэл.',
                 'client_id' => 1,
                 'creator_id' => 1,
@@ -78,6 +129,7 @@ class EquipmentOrdersSeeder extends Seeder
                 'equipment_id' => 2,
                 'master_id' => 2,
                 'status_code' => 'repair',
+                'price' => 1000.65,
                 'description' => 'Почти капут. Движок нот ворк. Крышки нет. Курбурятор ворк.',
                 'client_id' => 1,
                 'creator_id' => 1,

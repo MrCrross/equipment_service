@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApprovalRepair;
+use App\Mail\CanceledRepair;
+use App\Mail\ClosedRepair;
+use App\Mail\CompletedRepair;
 use App\Models\Equipment\Equipment;
 use App\Models\Orders\EquipmentOrder;
 use App\Models\Orders\OrdersStatus;
@@ -12,6 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class OrdersController extends Controller
@@ -122,11 +127,13 @@ class OrdersController extends Controller
     {
         $request->validate([
             'description' => ['required','string'],
+            'price' => ['required', 'numeric'],
             'equipment_id' => ['required', 'integer', Rule::exists(Equipment::class, 'id')],
         ]);
         $fields = [
             'equipment_id' => $request->post('equipment_id'),
             'description' => $request->post('description'),
+            'price' => $request->post('price'),
             'creator_id' => Auth::id(),
         ];
         $route = 'orders.index';
@@ -138,10 +145,10 @@ class OrdersController extends Controller
             $fields['client_name'] = $request->post('client_name');
             $fields['phone'] = $request->post('phone');
             $fields['master_id'] = Auth::id();
-            $fields['status_code'] = 'accepted';
+            $fields['status_code'] = 'diagnostic';
         } else {
             $fields['client_id'] = Auth::id();
-            $fields['status_code'] = 'accepted';
+            $fields['status_code'] = 'diagnostic';
             $route = 'dashboard';
         }
         EquipmentOrder::create($fields);
@@ -174,12 +181,14 @@ class OrdersController extends Controller
     {
         $request->validate([
             'description' => ['required','string'],
+            'price' => ['required', 'numeric'],
             'equipment_id' => ['required', 'integer', Rule::exists(Equipment::class, 'id')],
             'status_code' => ['required', 'string', Rule::exists(OrdersStatus::class, 'code')],
         ]);
         $fields = [
             'equipment_id' => $request->post('equipment_id'),
             'description' => $request->post('description'),
+            'price' => $request->post('price'),
             'editor_id' => Auth::id(),
             'status_code' => $request->post('status_code'),
         ];
@@ -194,7 +203,23 @@ class OrdersController extends Controller
         } elseif ($request->has('client_id')) {
             $fields['client_id'] = $request->post('client_id');
         }
+        $oldOrder = EquipmentOrder::query()->with(['client'])->find($id);
         EquipmentOrder::updateOrCreate(['id' => $id], $fields);
+
+        $order = EquipmentOrder::query()->with(['client', 'equipment.model.type', 'equipment.model.brand',])->find($id);
+        if ($oldOrder->status_code !== $order->status_code && !empty($order->client)) {
+            $mailTemplate = match ($order->status_code) {
+                'approval' => new ApprovalRepair($order),
+                'canceled' => new CanceledRepair($order),
+                'closed' => new ClosedRepair($order),
+                'completed' => new CompletedRepair($order),
+                default => null,
+            };
+            if (!empty($mailTemplate)) {
+                Mail::to($order->client->email)->send($mailTemplate);
+            }
+        }
+
 
         return redirect()->route('orders.index')
             ->with('success', __('orders.messages.update'));
@@ -256,5 +281,32 @@ class OrdersController extends Controller
             'users_select' => User::autocomplete(),
             'equipment_select' => Equipment::autocomplete(),
         ]);
+    }
+
+    public function changeStatus(
+        int $orderID,
+        string $statusCode
+    ): RedirectResponse {
+        $order = EquipmentOrder::query()->find($orderID);
+        if (!empty($order)) {
+            $checkOldStatus = match ($statusCode) {
+                'signed', 'canceled' => 'approval',
+            };
+            if ($checkOldStatus === $order->status_code) {
+                $order->update(['status_code' => $statusCode]);
+            }
+            $mailTemplate = match ($statusCode) {
+                'approval' => new ApprovalRepair($order),
+                'canceled' => new CanceledRepair($order),
+                'closed' => new ClosedRepair($order),
+                'completed' => new CompletedRepair($order),
+                default => null,
+            };
+            if (!empty($mailTemplate) && !empty($order->client)) {
+                Mail::to($order->client->email)->send($mailTemplate);
+            }
+        }
+
+        return redirect()->route('welcome');
     }
 }

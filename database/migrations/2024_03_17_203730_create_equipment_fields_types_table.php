@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('code', 20);
             $table->string('locale', 10);
+
+            $table->unique(['code', 'locale']);
         });
     }
 

@@ -21,6 +21,8 @@ class CreateHistoryTables extends Migration
             $table->string('message');
             $table->text('meta')->nullable();
             $table->timestamp('performed_at');
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

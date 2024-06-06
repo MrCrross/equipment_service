@@ -42,14 +42,16 @@
                             for="phone"
                             :value="__('orders.fields.phone')"
                         />
-                        <x-text-input type="text" id="phone" name="phone" :placeholder="__('orders.fields.phone')"></x-text-input>
+                        <x-text-input type="text" id="phone" name="phone"
+                                      :placeholder="__('orders.fields.phone')"></x-text-input>
                     </div>
                     <div class="flex flex-col">
                         <x-input-label
                             for="client_name"
                             :value="__('orders.fields.client')"
                         />
-                        <x-text-input type="text" name="client_name" :placeholder="__('orders.fields.client')"></x-text-input>
+                        <x-text-input type="text" name="client_name"
+                                      :placeholder="__('orders.fields.client')"></x-text-input>
                     </div>
                     <div class="flex flex-col">
                         <x-input-label
@@ -62,6 +64,23 @@
                             class="mt-1"
                             :placeholder="__('orders.fields.description')"
                         ></x-textarea>
+                    </div>
+                    <div class="flex flex-col">
+                        <x-input-label
+                            for="price"
+                            :value="__('orders.fields.price')"
+                        />
+                        <x-text-input
+                            id="price"
+                            name="price"
+                            type="number"
+                            class="mt-1 block w-full"
+                            min="0.00"
+                            step="0.01"
+                            :value="0.00"
+                            :placeholder="__('orders.fields.price')"
+                            required
+                        />
                     </div>
                     <div class="mt-2">
                         <x-btn type="submit">{{ __('actions.submit') }}</x-btn>

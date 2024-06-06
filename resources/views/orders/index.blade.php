@@ -171,14 +171,15 @@
     <table class="table-auto w-full my-5">
         <thead>
         <tr>
-            <th class="w-1/8 border-2 border-gray-400 px-4 py-2">№</th>
-            <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('equipment.headers.main.single') }}</th>
-            <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.status') }}</th>
-            <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.master') }}</th>
-            <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.client') }}</th>
-            <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.phone') }}</th>
-            <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.creator') }}</th>
-            <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.editor') }}</th>
+            <th class="w-1/12 border-2 border-gray-400 px-4 py-2">№</th>
+            <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('equipment.headers.main.single') }}</th>
+            <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.status') }}</th>
+            <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.master') }}</th>
+            <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.client') }}</th>
+            <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.phone') }}</th>
+            <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.price') }}</th>
+            <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.creator') }}</th>
+            <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.editor') }}</th>
             <th class="w-3/12 border-2 border-gray-400 px-4 py-2">{{ __('datatable.action') }}</th>
         </tr>
         </thead>
@@ -217,6 +218,7 @@
                             {{ $order->client->phone }}
                         @endif
                     </td>
+                    <td class="border-2 border-gray-400 px-4 py-2">{{ $order->price }}</td>
                     <td class="border-2 border-gray-400 px-4 py-2">{{ $order->creator->name }}</td>
                     <td class="border-2 border-gray-400 px-4 py-2">
                         @if(empty($order->editor))
@@ -242,7 +244,7 @@
             @endforeach
         @else
             <tr>
-                <td colspan="4"><x-no-data></x-no-data></td>
+                <td colspan="12"><x-no-data></x-no-data></td>
             </tr>
         @endif
         </tbody>

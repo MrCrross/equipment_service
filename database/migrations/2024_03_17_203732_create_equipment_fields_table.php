@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('type_code', 20);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('type_code')->on('equipment_fields_types')->references('code');
         });
     }
 
