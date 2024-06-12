@@ -63,8 +63,7 @@ class OrdersController extends Controller
     public function __construct()
     {
         $this->middleware('permission:equipment_orders_view|equipment_orders_view-delete', ['only' => ['index']]);
-        $this->middleware('permission:equipment_orders_my_create', ['only' => ['store',]]);
-        $this->middleware('permission:equipment_orders_create', ['only' => ['create', 'store',]]);
+        $this->middleware('permission:equipment_orders_create|equipment_orders_my_create', ['only' => ['create', 'store',]]);
         $this->middleware('permission:equipment_orders_edit|equipment_orders_my_edit', ['only' => ['edit', 'update', 'destroy']]);
     }
 

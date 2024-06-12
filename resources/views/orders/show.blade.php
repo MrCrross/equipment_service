@@ -21,10 +21,12 @@
             </div>
             <div class="flex flex-col">
                 <strong>{{ __('orders.fields.status') }}</strong>
+                @if(!empty($order->status))
                 @if(empty($order->deleted_at))
                     <x-badge body="green">{{ $order->status->name }}</x-badge>
                 @else
                     <x-badge body="red">{{ $order->status->name }}</x-badge>
+                @endif
                 @endif
             </div>
             <div class="flex flex-col">

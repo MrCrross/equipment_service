@@ -191,10 +191,12 @@
                     <td class="border-2 border-gray-400 px-4 py-2">{{ ++$key + $pageCount }}</td>
                     <td class="border-2 border-gray-400 px-4 py-2">{{ $order->equipment->model->type->name . ' ' . $order->equipment->model->brand->name . ' ' . $order->equipment->model->name . ' ' . $order->equipment->serial }}</td>
                     <td class="border-2 border-gray-400 px-4 py-2">
+                        @if(!empty($order->status))
                         @if(empty($order->deleted_at))
                             <x-badge body="green">{{ $order->status->name }}</x-badge>
                         @else
                             <x-badge body="red">{{ $order->status->name }}</x-badge>
+                        @endif
                         @endif
                     </td>
                     <td class="border-2 border-gray-400 px-4 py-2">

@@ -5,6 +5,7 @@ namespace App\Models\Orders;
 use App\Models\Equipment\Equipment;
 use App\Models\User;
 use App\Traits\HistoryModelTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,6 +17,7 @@ class EquipmentOrder extends Model
     use SoftDeletes;
     use HasHistories;
     use HistoryModelTrait;
+    use HasFactory;
 
     protected $table = 'equipment_orders';
     protected $guarded = [];

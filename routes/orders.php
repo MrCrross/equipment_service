@@ -1,10 +1,5 @@
 <?php
 
-use App\Http\Controllers\Equipment\EquipmentBrandsController;
-use App\Http\Controllers\Equipment\EquipmentController;
-use App\Http\Controllers\Equipment\EquipmentFieldsController;
-use App\Http\Controllers\Equipment\EquipmentModelsController;
-use App\Http\Controllers\Equipment\EquipmentTypesController;
 use App\Http\Controllers\OrdersController;
 use Illuminate\Support\Facades\Route;
 

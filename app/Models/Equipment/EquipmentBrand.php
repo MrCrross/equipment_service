@@ -4,6 +4,7 @@ namespace App\Models\Equipment;
 
 use App\Models\User;
 use App\Traits\HistoryModelTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,6 +16,7 @@ class EquipmentBrand extends Model
     use SoftDeletes;
     use HasHistories;
     use HistoryModelTrait;
+    use HasFactory;
 
     protected $table = 'equipment_brands';
     protected $guarded = [];
