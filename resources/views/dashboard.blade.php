@@ -61,7 +61,7 @@
                 </x-modal>
             </div>
             <form method="GET" action="{{ route('orders.index') }}"
-                  class="rounded-xl shadow bg-gray-100 p-4">
+                  class="rounded-xl shadow bg-gray-100 p-4 mt-2">
                 @csrf
                 <h1 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('datatable.filters') }}</h1>
                 <div class="grid grid-cols-3 gap-10">
@@ -270,7 +270,7 @@
                             </td>
                             <td class="border-2 border-gray-400 px-4 py-2">
                                 <x-a body="info" href="{{ route('orders.show',$order->id) }}">{{ __('actions.view') }}</x-a>
-                                @can('equipment_orders_edit')
+                                @canany(['equipment_orders_edit', 'equipment_orders_my_edit'])
                                     @if(empty($order->deleted_at))
                                         <x-a href="{{ route('orders.edit',$order->id) }}">&#128393;</x-a>
                                         <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style = "display:inline">
@@ -279,7 +279,7 @@
                                             <x-btn body="danger" type="submit">&times;</x-btn>
                                         </form>
                                     @endif
-                                @endcan
+                                @endcanany
                             </td>
                         </tr>
                     @endforeach

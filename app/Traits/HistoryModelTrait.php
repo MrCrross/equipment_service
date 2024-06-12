@@ -40,14 +40,14 @@ trait HistoryModelTrait
                             ) {
                                 $oldValue = DB::table($metaFields['table']['name'])
                                     ->where($metaFields['table']['value'], $meta['old'])
-                                    ->when(!empty($metaFields['table']['locale']), function ($query) {
-                                        $query->where('locale', '=', app()->getLocale());
+                                    ->when(!empty($metaFields['table']['language']), function ($query) {
+                                        $query->where('language', '=', app()->getLocale());
                                     })
                                     ->value($metaFields['table']['label']);
                                 $newValue = DB::table($metaFields['table']['name'])
                                     ->where($metaFields['table']['value'], $meta['new'])
-                                    ->when(!empty($metaFields['table']['locale']), function ($query) {
-                                        $query->where('locale', '=', app()->getLocale());
+                                    ->when(!empty($metaFields['table']['language']), function ($query) {
+                                        $query->where('language', '=', app()->getLocale());
                                     })
                                     ->value($metaFields['table']['label']);
                             } else {

@@ -23,7 +23,7 @@ class EquipmentFieldsType extends Model
         return $result->merge(
             self::query()
                 ->select('code as value', 'name as label')
-                ->where('locale', '=', app()->getLocale())
+                ->where('language', '=', app()->getLocale())
                 ->orderBy('name')
                 ->get()
         );

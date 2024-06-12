@@ -46,6 +46,7 @@ class UserSeeder extends Seeder
             'equipment_orders_my_edit',
             'equipment_orders_edit',
             'equipment_orders_create',
+            'equipment_orders_my_create',
         ];
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
@@ -68,7 +69,8 @@ class UserSeeder extends Seeder
             'Клиент сервиса' => Permission::whereIn(
                 'name',
                 [
-                    'equipment_orders_create'
+                    'equipment_orders_my_create',
+                    'equipment_orders_my_edit',
                 ]
             )
                 ->pluck('id','id'),

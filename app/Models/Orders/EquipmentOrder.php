@@ -29,7 +29,7 @@ class EquipmentOrder extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(OrdersStatus::class, 'status_code', 'code')
-            ->where('locale', '=', app()->getLocale());
+            ->where('language', '=', app()->getLocale());
     }
 
     public function client(): BelongsTo
@@ -96,7 +96,7 @@ class EquipmentOrder extends Model
                     'name' => 'equipment_orders_statuses',
                     'value' => 'code',
                     'label' => 'name',
-                    'locale' => true,
+                    'language' => true,
                 ]
             ],
             'description' => [

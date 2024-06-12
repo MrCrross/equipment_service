@@ -15,9 +15,9 @@ return new class extends Migration
             $table->tinyIncrements('id');
             $table->string('name');
             $table->string('code', 20);
-            $table->string('locale', 10);
+            $table->string('language', 10);
 
-            $table->unique(['code', 'locale']);
+            $table->unique(['code', 'language']);
         });
     }
 

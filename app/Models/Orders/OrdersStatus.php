@@ -26,7 +26,7 @@ class OrdersStatus extends Model
                     'code as value',
                     'name as label'
                 )
-                ->where('locale', '=', app()->getLocale())
+                ->where('language', '=', app()->getLocale())
                 ->get()
         );
     }

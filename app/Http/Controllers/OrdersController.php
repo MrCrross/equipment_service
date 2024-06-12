@@ -63,6 +63,7 @@ class OrdersController extends Controller
     public function __construct()
     {
         $this->middleware('permission:equipment_orders_view|equipment_orders_view-delete', ['only' => ['index']]);
+        $this->middleware('permission:equipment_orders_my_create', ['only' => ['store',]]);
         $this->middleware('permission:equipment_orders_create', ['only' => ['create', 'store',]]);
         $this->middleware('permission:equipment_orders_edit|equipment_orders_my_edit', ['only' => ['edit', 'update', 'destroy']]);
     }
@@ -95,7 +96,7 @@ class OrdersController extends Controller
         ]);
     }
 
-    public function show(int $id): Response
+    public function show(int $id): RedirectResponse|Response
     {
         $order = EquipmentOrder::query()->with([
             'equipment.model.type',
@@ -106,6 +107,15 @@ class OrdersController extends Controller
             'master',
             'status'
         ])->withTrashed()->find($id);
+        if (
+            !Auth::user()->can('equipment_orders_view-delete') &&
+            $order->master_id !== Auth::id() &&
+            $order->client_id !== Auth::id() &&
+            $order->creator_id !== Auth::id() &&
+            $order->editor_id !== Auth::id()
+        ) {
+            return redirect()->route('dashboard');
+        }
         $history = $order->getHistory();
 
         return response()->view('orders.show', [
@@ -127,13 +137,13 @@ class OrdersController extends Controller
     {
         $request->validate([
             'description' => ['required','string'],
-            'price' => ['required', 'numeric'],
+            'price' => ['numeric'],
             'equipment_id' => ['required', 'integer', Rule::exists(Equipment::class, 'id')],
         ]);
         $fields = [
             'equipment_id' => $request->post('equipment_id'),
             'description' => $request->post('description'),
-            'price' => $request->post('price'),
+            'price' => $request->post('price', 0),
             'creator_id' => Auth::id(),
         ];
         $route = 'orders.index';
@@ -148,7 +158,7 @@ class OrdersController extends Controller
             $fields['status_code'] = 'diagnostic';
         } else {
             $fields['client_id'] = Auth::id();
-            $fields['status_code'] = 'diagnostic';
+            $fields['status_code'] = 'draft';
             $route = 'dashboard';
         }
         EquipmentOrder::create($fields);
@@ -157,7 +167,11 @@ class OrdersController extends Controller
             ->with('success', __('orders.messages.store'));
     }
 
-    public function edit(int $id): Response
+    /**
+     * @param int $id
+     * @return RedirectResponse|Response
+     */
+    public function edit(int $id): RedirectResponse|Response
     {
         $order = EquipmentOrder::query()->with([
             'equipment.model.type',
@@ -168,6 +182,10 @@ class OrdersController extends Controller
             'master',
             'status'
         ])->withTrashed()->find($id);
+
+        if (Auth::user()->can('equipment_orders_my_edit') && $order->creator_id !== Auth::id()) {
+            return redirect()->route('dashboard');
+        }
 
         return response()->view('orders.edit', [
             'order' => $order,

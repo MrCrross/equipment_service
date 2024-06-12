@@ -33,17 +33,21 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'login' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:16', 'unique:'.User::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'login' => $request->login,
+            'phone' => $request->phone,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        $roleClient = Role::query()->where('name', '=', DB::raw('Клиент сервиса'))->value('id');
+        $roleClient = Role::query()->where('name', '=', 'Клиент сервиса')->value('id');
         $user->assignRole($roleClient);
 
         event(new Registered($user));

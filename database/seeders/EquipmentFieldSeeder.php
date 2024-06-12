@@ -19,42 +19,42 @@ class EquipmentFieldSeeder extends Seeder
             [
                 'name' => 'Текстовое поле',
                 'code' => 'text',
-                'locale' => 'ru',
+                'language' => 'ru',
             ],
             [
                 'name' => 'Числовое поле',
                 'code' => 'number',
-                'locale' => 'ru',
+                'language' => 'ru',
             ],
             [
                 'name' => 'Поле даты',
                 'code' => 'date',
-                'locale' => 'ru',
+                'language' => 'ru',
             ],
             [
                 'name' => 'Поле даты и времени',
                 'code' => 'datetime-local',
-                'locale' => 'ru',
+                'language' => 'ru',
             ],
             [
                 'name' => 'Text field',
                 'code' => 'text',
-                'locale' => 'en',
+                'language' => 'en',
             ],
             [
                 'name' => 'Number field',
                 'code' => 'number',
-                'locale' => 'en',
+                'language' => 'en',
             ],
             [
                 'name' => 'Date field',
                 'code' => 'date',
-                'locale' => 'en',
+                'language' => 'en',
             ],
             [
                 'name' => 'Date and time field',
                 'code' => 'datetime-local',
-                'locale' => 'en',
+                'language' => 'en',
             ],
         ];
         $fields = [

@@ -22,7 +22,7 @@ class EquipmentField extends Model
     public function type(): BelongsTo
     {
         return $this->belongsTo(EquipmentFieldsType::class, 'type_code', 'code')
-            ->where('locale', '=', app()->getLocale());
+            ->where('language', '=', app()->getLocale());
     }
 
     public static function autocomplete(): Collection
@@ -37,8 +37,7 @@ class EquipmentField extends Model
 
         return $result->merge(
             self::query()
-                ->select('equipment_fields.id as value', 'equipment_fields.name as label', 'equipment_fields_types.code')
-                ->join('equipment_fields_types', 'equipment_fields_types.id', '=', 'equipment_fields.type_id')
+                ->select('equipment_fields.id as value', 'equipment_fields.name as label', 'equipment_fields.type_code as code')
                 ->orderBy('equipment_fields.name')
                 ->get()
         );
@@ -61,7 +60,7 @@ class EquipmentField extends Model
                     'name' => 'equipment_fields_types',
                     'value' => 'code',
                     'label' => 'name',
-                    'locale' => true,
+                    'language' => true,
                 ],
             ],
         ];
