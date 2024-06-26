@@ -16,7 +16,7 @@
     <tr>
         <td colspan="2">
             <span
-                style="color: #333333; font-size:20px; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">{{__('order_mails.approval.header')}}</span>
+                style="color: #333333; font-size:20px; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">{{__('order_mails.changed_date.header')}}</span>
         </td>
     </tr>
     <tr>
@@ -77,26 +77,16 @@
     </tr>
     <tr>
         <td>
-            <a href="{{ config('app.url') . '/orders/' . $order->id  . '/status/signed' }}"
-               style="color: #ffffff; line-height: 30px; -webkit-text-size-adjust:none; display: inline-block;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            border-radius: 4px;
-            background-color: #38a169;
-            " target="_blank">{{__('order_mails.approval.signed')}}</a>
+            <span
+                style="color: #333333; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
+                {{__('order_mails.changed_date.with')}} {{ $oldDateRepair}}
+            </span>
         </td>
         <td>
-            <a href="{{ config('app.url') . '/orders/' . $order->id  . '/status/canceled' }}"
-               style="color: #ffffff; line-height: 30px; -webkit-text-size-adjust:none; display: inline-block;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            border-radius: 4px;
-            background-color: #e53e3e;
-            " target="_blank">{{__('order_mails.approval.canceled')}}</a>
+            <span
+                style="color: #333333; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
+                {{__('order_mails.changed_date.to')}} {{ $newDateRepair}}
+            </span>
         </td>
     </tr>
     <tr>
@@ -106,7 +96,7 @@
         <td colspan="2">
             <span
                 style="color: #333333; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
-                {{__('order_mails.approval.thanks')}}
+            {{__('order_mails.approval.thanks')}}
             </span>
         </td>
     </tr>
@@ -114,7 +104,7 @@
         <td colspan="2">
             <span
                 style="color: #333333; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
-                {{__('order_mails.respect')}} {{ config('app.name') }}
+            {{__('order_mails.respect')}} {{ config('app.name') }}
             </span>
         </td>
     </tr>

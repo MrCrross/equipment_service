@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Orders;
 
 use App\Models\Orders\EquipmentOrder;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ClosedRepair extends Mailable
+class AppointmentMaster extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,6 +18,7 @@ class ClosedRepair extends Mailable
      */
     public function __construct(public EquipmentOrder $order)
     {
+        //
     }
 
     /**
@@ -27,7 +27,7 @@ class ClosedRepair extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('orders.mail.headers.closed'),
+            subject: __('orders.mail.headers.appointment_master'),
         );
     }
 
@@ -37,7 +37,7 @@ class ClosedRepair extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'orders.mail.closed-repair',
+            view: 'orders.mail.appointment-master',
             with: [
                 'order' => $this->order,
             ]

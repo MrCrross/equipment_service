@@ -47,6 +47,7 @@ class UserSeeder extends Seeder
             'equipment_orders_edit',
             'equipment_orders_create',
             'equipment_orders_my_create',
+            'equipment_orders_print',
         ];
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);
@@ -79,6 +80,7 @@ class UserSeeder extends Seeder
                 [
                     'equipment_orders_my_edit',
                     'equipment_orders_create',
+                    'equipment_orders_print',
                 ]
             )
                 ->pluck('id','id'),

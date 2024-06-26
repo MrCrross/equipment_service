@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('client_id')->nullable();
             $table->foreignId('creator_id');
             $table->foreignId('editor_id')->nullable();
+            $table->date('date_repair')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

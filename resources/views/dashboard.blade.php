@@ -25,21 +25,42 @@
                 >{{ __('actions.add') }}</x-btn>
 
                 <x-modal name="order-create-modal" focusable>
+                    <x-template.equipment-field clone="1" :key="0" :fields="$fields_select"></x-template.equipment-field>
                     <form action="{{route('orders.store')}}" method="POST">
                         @csrf
                         <div class="my-5 mx-5">
                             <div class="flex flex-col">
                                 <x-input-label
-                                    for="equipment_id"
-                                    :value="__('equipment.headers.main.single')"
+                                    for="model_id"
+                                    :value="__('equipment.headers.models.single')"
                                 />
                                 <x-select
-                                    id="equipment_id"
-                                    name="equipment_id"
-                                    class="mt-1"
-                                    :data="$equipment_select"
-                                    :placeholder="__('equipment.headers.main.single')"
+                                    id="model_id"
+                                    name="model_id"
+                                    class="mt-1 block w-full"
+                                    :data="$models_select"
+                                    required
                                 />
+                            </div>
+                            <div class="flex flex-col">
+                                <x-input-label
+                                    for="short_name"
+                                    :value="__('equipment.fields.main.short_name')"
+                                />
+                                <x-text-input type="text" name="short_name" :placeholder="__('equipment.fields.main.short_name')"></x-text-input>
+                            </div>
+                            <div class="flex flex-col">
+                                <x-input-label
+                                    for="serial"
+                                    :value="__('equipment.fields.main.serial')"
+                                />
+                                <x-text-input type="text" name="serial" :placeholder="__('equipment.fields.main.serial')"></x-text-input>
+                            </div>
+                            <div class="mt-4">
+                                <h1 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('equipment.headers.fields.title') }}</h1>
+                                <div class="py-4 flex flex-col justify-items-stretch container-line-EquipmentField">
+                                    <x-template.equipment-field :key="0" :fields="$fields_select"></x-template.equipment-field>
+                                </div>
                             </div>
                             <div class="flex flex-col">
                                 <x-input-label
@@ -214,14 +235,14 @@
             <table class="table-auto w-full my-5">
                 <thead>
                 <tr>
-                    <th class="w-1/8 border-2 border-gray-400 px-4 py-2">№</th>
-                    <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('equipment.headers.main.single') }}</th>
-                    <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.status') }}</th>
-                    <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.master') }}</th>
-                    <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.client') }}</th>
-                    <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.phone') }}</th>
-                    <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.creator') }}</th>
-                    <th class="w-1/8 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.editor') }}</th>
+                    <th class="w-1/12 border-2 border-gray-400 px-4 py-2">№</th>
+                    <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('equipment.headers.main.single') }}</th>
+                    <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.status') }}</th>
+                    <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.date_repair') }}</th>
+                    <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.master') }}</th>
+                    <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.client') }}</th>
+                    <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.phone') }}</th>
+                    <th class="w-1/12 border-2 border-gray-400 px-4 py-2">{{ __('orders.fields.price') }}</th>
                     <th class="w-3/12 border-2 border-gray-400 px-4 py-2">{{ __('datatable.action') }}</th>
                 </tr>
                 </thead>
@@ -237,6 +258,13 @@
                                     <x-badge body="green">{{ $order->status->name }}</x-badge>
                                 @else
                                     <x-badge body="red">{{ $order->status->name }}</x-badge>
+                                @endif
+                            </td>
+                            <td class="border-2 border-gray-400 px-4 py-2">
+                                @if(!empty($order->date_repair))
+                                    {{\Carbon\Carbon::parse($order->date_repair)->format('d.m.Y')}}
+                                @else
+                                    {{__('order_mails.changed_date.empty_date')}}
                                 @endif
                             </td>
                             <td class="border-2 border-gray-400 px-4 py-2">
@@ -260,16 +288,14 @@
                                     {{ $order->client->phone }}
                                 @endif
                             </td>
-                            <td class="border-2 border-gray-400 px-4 py-2">{{ $order->creator->name }}</td>
                             <td class="border-2 border-gray-400 px-4 py-2">
-                                @if(empty($order->editor))
-                                    <x-no-data font="1"></x-no-data>
-                                @else
-                                    {{ $order->editor->name }}
-                                @endif
+                                {{$order->price}}
                             </td>
                             <td class="border-2 border-gray-400 px-4 py-2">
                                 <x-a body="info" href="{{ route('orders.show',$order->id) }}">{{ __('actions.view') }}</x-a>
+                                @can('equipment_orders_print')
+                                    <x-a body="info" href="{{ route('orders.print', $order->id) }}">{{ __('actions.print') }}</x-a>
+                                @endcan
                                 @canany(['equipment_orders_edit', 'equipment_orders_my_edit'])
                                     @if(empty($order->deleted_at))
                                         <x-a href="{{ route('orders.edit',$order->id) }}">&#128393;</x-a>
@@ -294,3 +320,9 @@
         </div>
     </div>
 </x-app-layout>
+<script src="{{asset('js/templates/EquipmentFieldTemplate.js')}}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new EquipmentFieldTemplate();
+    })
+</script>

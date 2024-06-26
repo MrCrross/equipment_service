@@ -13,4 +13,5 @@ return [
     'delete' => 'Delete',
     'cancel' => 'Cancel',
     'add' => 'Add',
+    'print' => 'Print',
 ];

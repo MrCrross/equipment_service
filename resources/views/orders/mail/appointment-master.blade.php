@@ -7,9 +7,7 @@
     <tr>
         <td colspan="2">
             <span
-                style="color: #333333; font-size:20px; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
-                {{__('order_mails.dear')}} {{ $order->client->name }}
-            </span>
+                style="color: #333333; font-size:20px; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">{{__('order_mails.hello')}} {{ $order->master->name }}</span>
         </td>
     </tr>
     <tr>
@@ -19,20 +17,12 @@
         <td colspan="2">
             <span
                 style="color: #333333; font-size:20px; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
-                {{__('order_mails.closed.header')}}
+                {{__('order_mails.appointment_master.header')}}{{$order->id}}
             </span>
         </td>
     </tr>
     <tr>
         <td style="padding:8px"></td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <span
-                style="color: #333333; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
-                {{__('order_mails.order_number')}}{{$order->id}}
-            </span>
-        </td>
     </tr>
     <tr>
         <td>
@@ -49,13 +39,27 @@
         </td>
     </tr>
     <tr>
+        <td>
+            <span
+                style="color: #333333; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
+                {{__('orders.fields.description')}}:
+            </span>
+        </td>
+        <td>
+            <span
+                style="color: #333333; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
+                {{ $order->description}}
+            </span>
+        </td>
+    </tr>
+    <tr>
         <td style="padding:8px"></td>
     </tr>
     <tr>
         <td colspan="2">
             <span
                 style="color: #333333; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
-                {{__('order_mails.closed.wait')}}
+                {{__('order_mails.appointment_master.good_work')}}
             </span>
         </td>
     </tr>

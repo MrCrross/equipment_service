@@ -16,7 +16,6 @@
             :additionalFields="['code']"
             data-value="{{ !empty($fieldValue) ? $fieldValue : '' }}"
             data-key="{{$key}}"
-            required
         />
     </div>
     <div>

@@ -1,55 +1,72 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
-<head>
-    <style>
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            background-color: #f9fafb;
-        }
-
-        .header {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .panel {
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #e5e7eb;
-            margin-bottom: 20px;
-        }
-
-        .footer {
-            margin-top: 20px;
-            color: #555;
-        }
-        .font-bold { font-weight: 700; }
-        .mt-2 { margin-top: 0.5rem; }
-    </style>
-</head>
 <body>
-<div class="container">
-    <div class="header">{{__('completed_repair.dear')}} {{ $order->client->name }}</div>
-    <p>{{__('completed_repair.header')}}</p>
-    <div class="panel">
-        <p>
-            <span>{{__('completed_repair.order_number')}} {{$order->id}}</span>
-        </p>
-        <p class="mt-2">
-            <span class="font-bold">{{__('equipment.headers.main.single')}}:</span> <span>{{ $order->equipment->model->type->name . ' ' . $order->equipment->model->brand->name . ' ' . $order->equipment->model->name . ' ' . $order->equipment->serial }}</span>
-        </p>
-    </div>
-    </div>
-    <p>{{__('completed_repair.take')}}</p>
-    <div class="footer">
-        {{__('completed_repair.respect')}} {{ config('app.name') }}
-    </div>
-</div>
+<table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff"
+       style="margin:0; padding:10px; font: 18px Arial, sans-serif; width: 100%; border-radius: 4px;
+            border: 1px solid #e5e7eb;">
+    <tr>
+        <td colspan="2">
+            <span
+                style="color: #333333; font-size:20px; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
+                {{__('order_mails.dear')}} {{ $order->client->name }}
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:5px"></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <span
+                style="color: #333333; font-size:20px; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
+                {{__('order_mails.completed.header')}}
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:8px"></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <span
+                style="color: #333333; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
+                {{__('order_mails.order_number')}}{{$order->id}}
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span
+                style="color: #333333; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
+                {{__('equipment.headers.main.single')}}:
+            </span>
+        </td>
+        <td>
+            <span
+                style="color: #333333; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
+                {{ $order->equipment->model->type->name . ' ' . $order->equipment->model->brand->name . ' ' . $order->equipment->model->name . ' ' . $order->equipment->serial }}
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding:8px"></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <span
+                style="color: #333333; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
+                {{__('order_mails.completed.take')}}
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <span
+                style="color: #333333; font-weight: bold; line-height: 30px; -webkit-text-size-adjust:none; display: block;">
+                {{__('order_mails.respect')}} {{ config('app.name') }}
+            </span>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

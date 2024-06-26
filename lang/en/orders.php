@@ -10,18 +10,19 @@ return [
         'creator' => 'Creator',
         'editor' => 'Editor',
         'price' => 'Cost (rubles)',
+        'date_repair' => 'Repair completion date',
     ],
     'messages' => [
-        'store' => 'The order saved successfully',
-        'update' => 'Order changed successful',
-        'delete' => 'The order was deleted successfully',
+        'store' => 'The application saved successfully',
+        'update' => 'Application changed successful',
+        'delete' => 'The application was deleted successfully',
     ],
     'headers' => [
-        'single' => 'Order',
-        'title' => 'Orders',
-        'view' => 'Viewing a order',
-        'create' => 'Create a order',
-        'update' => 'Change the order',
+        'single' => 'Application',
+        'title' => 'Applications',
+        'view' => 'Viewing an application',
+        'create' => 'Create an application',
+        'update' => 'Change the application',
     ],
     'mail' => [
         'headers' => [
@@ -29,6 +30,8 @@ return [
             'completed' => 'The repair is completed',
             'canceled' => 'The application has been cancelled',
             'closed' => 'The application is closed',
+            'appointment_master' => 'Appointment by the master to application',
+            'changed_date' => 'Changing the repair date',
         ],
     ]
 ];

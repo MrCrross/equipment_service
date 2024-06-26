@@ -106,7 +106,7 @@
                 <img class="self-center" src="{{ asset('welcome/img/tv.png') }}" alt="tv">
             </div>
             <div class="py-1 cursor-pointer hover:lavand-color flex-grow text-center">
-                <a class="uppercase" href="#">телевизоры</a>
+                <a class="uppercase" href="/dashboard">телевизоры</a>
             </div>
         </div>
         <!--Card 2-->
@@ -115,7 +115,7 @@
                 <img class="self-center" src="{{ asset('welcome/img/wash-machine.png') }}" alt="wash">
             </div>
             <div class="py-1 cursor-pointer hover:lavand-color flex-grow text-center">
-                <a class="uppercase" href="#">стиральные машины</a>
+                <a class="uppercase" href="/dashboard">стиральные машины</a>
             </div>
         </div>
         <!--Card 3-->
@@ -124,7 +124,7 @@
                 <img class="self-center" src="{{ asset('welcome/img/vacuum-cleaner.png') }}" alt="vac">
             </div>
             <div class="py-1 cursor-pointer hover:lavand-color flex-grow text-center">
-                <a class="uppercase" href="#">пылесосы</a>
+                <a class="uppercase" href="/dashboard">пылесосы</a>
             </div>
         </div>
         <!--Card 4-->
@@ -133,7 +133,7 @@
                 <img class="self-center" src="{{ asset('welcome/img/freeze.png') }}" alt="freeze">
             </div>
             <div class="py-1 cursor-pointer hover:lavand-color flex-grow text-center">
-                <a class="uppercase" href="#">холодильники</a>
+                <a class="uppercase" href="/dashboard">холодильники</a>
             </div>
         </div>
         <!--Card 5-->
@@ -142,7 +142,7 @@
                 <img class="self-center" src="{{ asset('welcome/img/dish-wash.png') }}" alt="dish-wash">
             </div>
             <div class="py-1 cursor-pointer hover:lavand-color flex-grow text-center">
-                <a class="uppercase" href="#">посудомоечные машины</a>
+                <a class="uppercase" href="/dashboard">посудомоечные машины</a>
             </div>
         </div>
         <!--Card 6-->
@@ -151,7 +151,7 @@
                 <img class="self-center" src="{{ asset('welcome/img/vents.png') }}" alt="vents">
             </div>
             <div class="py-1 cursor-pointer hover:lavand-color flex-grow text-center">
-                <a class="uppercase" href="#">вытяжки</a>
+                <a class="uppercase" href="/dashboard">вытяжки</a>
             </div>
         </div>
         <!--Card 7-->
@@ -160,7 +160,7 @@
                 <img class="self-center" src="{{ asset('welcome/img/coffee.png') }}" alt="cofe">
             </div>
             <div class="py-1 cursor-pointer hover:lavand-color flex-grow text-center">
-                <a class="uppercase" href="#">кофе машины</a>
+                <a class="uppercase" href="/dashboard">кофе машины</a>
             </div>
         </div>
         <!--Card 8-->
@@ -169,7 +169,7 @@
                 <img class="self-center" src="{{ asset('welcome/img/boiler.png') }}" alt="boiler">
             </div>
             <div class="py-1 cursor-pointer hover:lavand-color flex-grow text-center">
-                <a class="uppercase" href="#">электрические чайники</a>
+                <a class="uppercase" href="/dashboard">электрические чайники</a>
             </div>
         </div>
     </div>

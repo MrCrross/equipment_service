@@ -70,6 +70,20 @@
                     </div>
                     <div class="flex flex-col">
                         <x-input-label
+                            for="date_repair"
+                            :value="__('orders.fields.date_repair')"
+                        />
+                        <x-text-input
+                            id="date_repair"
+                            name="date_repair"
+                            type="date"
+                            value="{{$order->date_repair}}"
+                            class="mt-1 block w-full"
+                            min="{{\Illuminate\Support\Carbon::now()->addDay()->format('Y-m-d')}}"
+                        />
+                    </div>
+                    <div class="flex flex-col">
+                        <x-input-label
                             for="phone"
                             :value="__('orders.fields.phone')"
                         />
@@ -132,10 +146,12 @@
 </x-app-layout>
 <script src="{{asset('js/imask.js')}}"></script>
 <script>
-    IMask(
-        document.getElementById('phone'),
-        {
-            mask: '+{7}(000)000-00-00'
-        }
-    )
+    if ( document.getElementById('phone')) {
+        IMask(
+            document.getElementById('phone'),
+            {
+                mask: '+{7}(000)000-00-00'
+            }
+        )
+    }
 </script>

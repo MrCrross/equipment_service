@@ -104,7 +104,7 @@ class EquipmentController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'model_id' => ['required', 'int', Rule::exists(EquipmentModel::class, 'id')],
+            'model_id' => ['required', 'integer', Rule::exists(EquipmentModel::class, 'id')],
             'serial' => ['required', 'string'],
             'short_name' => ['required', 'string'],
             'fields' => ['array', 'nullable'],
@@ -179,7 +179,7 @@ class EquipmentController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $request->validate([
-            'model_id' => ['required', 'int', Rule::exists(EquipmentModel::class, 'id')],
+            'model_id' => ['required', 'integer', Rule::exists(EquipmentModel::class, 'id')],
             'serial' => ['required', 'string'],
             'short_name' => ['required', 'string'],
             'fields' => ['array', 'nullable'],
