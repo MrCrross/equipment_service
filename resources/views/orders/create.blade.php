@@ -36,7 +36,6 @@
                             class="mt-1 block w-full"
                             :data="$clients"
                             :additionalFields="['phone', 'name']"
-                            required
                         />
                     </div>
                     <div class="flex flex-col">
