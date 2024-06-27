@@ -29,7 +29,7 @@ class EquipmentField extends Model
     {
         $result = collect([
             (object)[
-                'value' => '',
+                'value' => '0',
                 'label' => __('datatable.no_selected'),
                 'code' => ''
             ]

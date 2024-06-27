@@ -85,6 +85,6 @@
 <script src="{{asset('js/templates/EquipmentFieldTemplate.js')}}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        new EquipmentFieldTemplate();
+        new EquipmentFieldTemplate("{{__('actions.search')}}");
     })
 </script>

@@ -13,6 +13,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="stylesheet" href="{{asset('/css/nice-select2.css')}}">
+        <script src="{{asset('/js/nice-select2.js')}}"></script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -35,5 +37,16 @@
                 {{ $slot }}
             </main>
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function(e){
+                const selects = document.querySelectorAll('select')
+                selects.forEach((select)=>{
+                    NiceSelect.bind(select, {
+                        searchable: true,
+                        searchtext: "{{__('actions.search')}}"
+                    });
+                })
+            });
+        </script>
     </body>
 </html>

@@ -14,4 +14,5 @@ return [
     'cancel' => 'Cancel',
     'add' => 'Add',
     'print' => 'Print',
+    'search' => 'Search',
 ];

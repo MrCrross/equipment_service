@@ -1,14 +1,17 @@
 class EquipmentFieldTemplate {
     static btnAddLineSelector = '.add-line-EquipmentField';
-    static selectSelector = '.select-EquipmentField';
+    static selectSelector = 'select.select-EquipmentField';
+    static divSelectSelector = 'div.select-EquipmentField';
     static btnRemoveLineSelector = '.remove-line-EquipmentField';
     static containerLineSelector = '.container-line-EquipmentField';
     static lineEquipmentFieldClass = 'line-EquipmentField';
     static lineEquipmentFieldCloneSelector = '#line-clone-EquipmentField';
     static keyLine = 0;
+    static searchText = 'Поиск'
 
-    constructor() {
+    constructor(searchText) {
         EquipmentFieldTemplate.addListeners();
+        EquipmentFieldTemplate.searchText = searchText
     }
 
     static addListeners()
@@ -79,6 +82,7 @@ class EquipmentFieldTemplate {
     {
         EquipmentFieldTemplate.keyLine++;
         const clone = document.querySelector(EquipmentFieldTemplate.lineEquipmentFieldCloneSelector).cloneNode(true);
+        clone.querySelector(EquipmentFieldTemplate.divSelectSelector).remove()
         const select = clone.querySelector(EquipmentFieldTemplate.selectSelector)
         const addBtn = clone.querySelector(EquipmentFieldTemplate.btnAddLineSelector);
         const removeBtn = clone.querySelector(EquipmentFieldTemplate.btnRemoveLineSelector);
@@ -88,6 +92,10 @@ class EquipmentFieldTemplate {
         removeBtn.classList.remove('hidden');
         select.name = `fields[${EquipmentFieldTemplate.keyLine}][id]`;
         select.addEventListener('change', (event) => EquipmentFieldTemplate.changeInputByCode(event.target));
+        NiceSelect.bind(select, {
+            searchable: true,
+            searchtext: EquipmentFieldTemplate.searchText
+        });
         removeBtn.addEventListener('click', (event) => EquipmentFieldTemplate.removeLine(event));
 
         return clone;

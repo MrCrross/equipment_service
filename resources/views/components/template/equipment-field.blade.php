@@ -1,6 +1,6 @@
 <div
     @php if(!empty($clone)) { echo 'id="line-clone-EquipmentField"'; } @endphp
-    class="flex flex-row justify-between items-end gap-2 py-4 line-EquipmentField {{empty($clone) ? '' : 'hidden'}}"
+    class="flex flex-row justify-between items-end gap-1 py-2 line-EquipmentField {{empty($clone) ? '' : 'hidden'}}"
 >
     <div>
         <x-input-label
@@ -10,7 +10,7 @@
         <x-select
             id="field_id"
             name="fields[{{$key}}][id]"
-            class="mt-1 block w-full select-EquipmentField"
+            class="block w-full select-EquipmentField"
             :data="$fields"
             :selected="!empty($fieldID) ? $fieldID : 0"
             :additionalFields="['code']"

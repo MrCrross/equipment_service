@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Panoscape\History\HasHistories;
 use Panoscape\History\HasOperations;
 use Spatie\Permission\Traits\HasRoles;
@@ -98,5 +99,19 @@ class User extends Authenticatable implements MustVerifyEmail
                 'name' => __('users.fields.email'),
             ],
         ];
+    }
+
+    public static function getClients()
+    {
+        $result = collect([
+            (object)[
+                'value' => '',
+                'label' => __('datatable.no_selected'),
+                'phone' => '',
+                'name' => '',
+            ]
+        ]);
+
+        return $result->merge(self::select(DB::raw('CONCAT(name, " (", phone, ")") as label'), 'id as value', 'phone', 'name')->role('Клиент сервиса')->get());
     }
 }

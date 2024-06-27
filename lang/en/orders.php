@@ -4,6 +4,7 @@ return [
     'fields' => [
         'master' => 'Master',
         'client' => 'Client',
+        'client_name' => 'Client name',
         'status' => 'Status',
         'phone' => 'Phone client',
         'description' => 'Description',

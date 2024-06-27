@@ -135,6 +135,9 @@ class OrdersController extends Controller
             'order_statuses_select' => OrdersStatus::autocomplete(),
             'users_select' => User::autocomplete(),
             'equipment_select' => Equipment::autocomplete(),
+            'models_select' => EquipmentModel::autocomplete(),
+            'fields_select' => EquipmentField::autocomplete(),
+            'clients' => User::getClients(),
         ]);
     }
 
@@ -359,6 +362,7 @@ class OrdersController extends Controller
             'users_select' => User::autocomplete(),
             'models_select' => EquipmentModel::autocomplete(),
             'fields_select' => EquipmentField::autocomplete(),
+            'clients' => User::getClients(),
         ]);
     }
 

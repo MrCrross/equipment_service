@@ -28,7 +28,39 @@
                     <x-template.equipment-field clone="1" :key="0" :fields="$fields_select"></x-template.equipment-field>
                     <form action="{{route('orders.store')}}" method="POST">
                         @csrf
-                        <div class="my-5 mx-5">
+                        <div class="my-5 mx-5 flex flex-col gap-2">
+                            @can('equipment_orders_create')
+                                <div class="flex flex-col">
+                                    <x-input-label
+                                        for="client_id"
+                                        :value="__('orders.fields.client')"
+                                    />
+                                    <x-select
+                                        id="client_id"
+                                        name="client_id"
+                                        class="mt-1 block w-full"
+                                        :data="$clients"
+                                        :additionalFields="['phone', 'name']"
+                                        required
+                                    />
+                                </div>
+                                <div class="flex flex-col">
+                                    <x-input-label
+                                        for="phone"
+                                        :value="__('orders.fields.phone')"
+                                    />
+                                    <x-text-input type="text" id="phone" name="phone"
+                                                  :placeholder="__('orders.fields.phone')"></x-text-input>
+                                </div>
+                                <div class="flex flex-col">
+                                    <x-input-label
+                                        for="client_name"
+                                        :value="__('orders.fields.client_name')"
+                                    />
+                                    <x-text-input type="text" id="client_name" name="client_name"
+                                                  :placeholder="__('orders.fields.client_name')"></x-text-input>
+                                </div>
+                            @endcan
                             <div class="flex flex-col">
                                 <x-input-label
                                     for="model_id"
@@ -56,9 +88,9 @@
                                 />
                                 <x-text-input type="text" name="serial" :placeholder="__('equipment.fields.main.serial')"></x-text-input>
                             </div>
-                            <div class="mt-4">
+                            <div class="mt-2">
                                 <h1 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('equipment.headers.fields.title') }}</h1>
-                                <div class="py-4 flex flex-col justify-items-stretch container-line-EquipmentField">
+                                <div class="py-2 flex flex-col justify-items-stretch container-line-EquipmentField">
                                     <x-template.equipment-field :key="0" :fields="$fields_select"></x-template.equipment-field>
                                 </div>
                             </div>
@@ -323,6 +355,23 @@
 <script src="{{asset('js/templates/EquipmentFieldTemplate.js')}}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        new EquipmentFieldTemplate();
+        new EquipmentFieldTemplate("{{__('actions.search')}}");
+        const clientID = document.getElementById('client_id');
+        clientID.addEventListener('change', (e) => {
+            const id = e.target.value;
+            const clientName = document.getElementById('client_name')
+            const clientPhone = document.getElementById('phone')
+            if (+id !== 0) {
+                clientName.value = e.target.selectedOptions[0].getAttribute('data-name')
+                clientPhone.value = e.target.selectedOptions[0].getAttribute('data-phone')
+                clientName.setAttribute('disabled', true)
+                clientPhone.setAttribute('disabled', true)
+            } else {
+                clientName.value = ''
+                clientPhone.value = ''
+                clientName.removeAttribute('disabled')
+                clientPhone.removeAttribute('disabled')
+            }
+        })
     })
 </script>
