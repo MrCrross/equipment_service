@@ -5,7 +5,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('orders.headers.create') }}</h2>
             </div>
             <div class="float-right">
-                <x-a href="{{ route('orders.index') }}">{{ __('actions.back') }}</x-a>
+                <x-a href="{{ back()->getTargetUrl() }}">{{ __('actions.back') }}</x-a>
             </div>
         </div>
     </x-slot>
@@ -20,7 +20,7 @@
         </div>
     @endif
     <div class="container mx-auto my-5 bg-gray-50 rounded">
-        <div class="py-5 mx-5 w-1/2 mx-auto">
+        <div class="py-5 w-1/2 mx-auto">
             <x-template.equipment-field clone="1" :key="0" :fields="$fields_select"></x-template.equipment-field>
             <form action="{{route('orders.store')}}" method="POST">
                 @csrf
@@ -125,6 +125,7 @@
     </div>
 </x-app-layout>
 <script src="{{asset('js/imask.js')}}"></script>
+<script src="{{asset('js/templates/EquipmentFieldTemplate.js')}}"></script>
 <script>
     IMask(
         document.getElementById('phone'),
@@ -132,9 +133,6 @@
             mask: '+{7}(000)000-00-00'
         }
     )
-</script>
-<script src="{{asset('js/templates/EquipmentFieldTemplate.js')}}"></script>
-<script>
     document.addEventListener('DOMContentLoaded', function () {
         new EquipmentFieldTemplate("{{__('actions.search')}}");
         const clientID = document.getElementById('client_id');

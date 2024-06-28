@@ -5,7 +5,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('orders.headers.update') }}</h2>
             </div>
             <div class="float-right">
-                <x-a href="{{ route('orders.index') }}">{{ __('actions.back') }}</x-a>
+                <x-a href="{{ back()->getTargetUrl() }}">{{ __('actions.back') }}</x-a>
             </div>
         </div>
     </x-slot>
@@ -31,6 +31,7 @@
                             for="equipment_id"
                             :value="__('equipment.headers.main.single')"
                         />
+                        @can('equipment_orders_print')
                         <x-select
                             id="equipment_id"
                             name="equipment_id"
@@ -39,7 +40,20 @@
                             :selected="$order->equipment_id"
                             :placeholder="__('equipment.headers.main.single')"
                         />
+                        @else
+                            <input type="hidden" name="equipment_id" value="{{$order->equipment_id}}">
+                            <x-select
+                                id="equipment_id"
+                                name="equipment_id"
+                                class="mt-1"
+                                :data="$equipment_select"
+                                :selected="$order->equipment_id"
+                                :placeholder="__('equipment.headers.main.single')"
+                                disabled
+                            />
+                        @endcan
                     </div>
+                    @can('equipment_orders_edit')
                     <div class="flex flex-col">
                         <x-input-label
                             for="master_id"
@@ -54,11 +68,13 @@
                             :placeholder="__('orders.fields.master')"
                         />
                     </div>
+                    @endcan
                     <div class="flex flex-col">
                         <x-input-label
                             for="status_code"
                             :value="__('orders.fields.status')"
                         />
+                        @can('equipment_orders_print')
                         <x-select
                             id="status_code"
                             name="status_code"
@@ -67,20 +83,45 @@
                             :selected="$order->status_code"
                             :placeholder="__('orders.fields.status')"
                         />
+                        @else
+                            <input type="hidden" name="status_code" value="{{$order->status_code}}">
+                            <x-select
+                                id="status_code"
+                                name="status_code"
+                                class="mt-1"
+                                :data="$order_statuses_select"
+                                :selected="$order->status_code"
+                                :placeholder="__('orders.fields.status')"
+                                disabled
+                            />
+                        @endcan
                     </div>
                     <div class="flex flex-col">
                         <x-input-label
                             for="date_repair"
                             :value="__('orders.fields.date_repair')"
                         />
-                        <x-text-input
-                            id="date_repair"
-                            name="date_repair"
-                            type="date"
-                            value="{{$order->date_repair}}"
-                            class="mt-1 block w-full"
-                            min="{{\Illuminate\Support\Carbon::now()->addDay()->format('Y-m-d')}}"
-                        />
+                        @can('equipment_orders_print')
+                            <x-text-input
+                                id="date_repair"
+                                name="date_repair"
+                                type="date"
+                                value="{{$order->date_repair}}"
+                                class="mt-1 block w-full"
+                                min="{{\Illuminate\Support\Carbon::now()->addDay()->format('Y-m-d')}}"
+                            />
+                        @else
+                            <input type="hidden" name="date_repair" value="{{$order->date_repair}}">
+                            <x-text-input
+                                id="date_repair"
+                                name="date_repair"
+                                type="date"
+                                value="{{$order->date_repair}}"
+                                class="mt-1 block w-full"
+                                min="{{\Illuminate\Support\Carbon::now()->addDay()->format('Y-m-d')}}"
+                                disabled
+                            />
+                        @endcan
                     </div>
                     <div class="flex flex-col">
                         <x-input-label
@@ -124,17 +165,32 @@
                             for="price"
                             :value="__('orders.fields.price')"
                         />
-                        <x-text-input
-                            id="price"
-                            name="price"
-                            type="number"
-                            class="mt-1 block w-full"
-                            min="0.00"
-                            step="0.01"
-                            :value="$order->price"
-                            :placeholder="__('orders.fields.price')"
-                            required
-                        />
+                        @can('equipment_orders_print')
+                            <x-text-input
+                                id="price"
+                                name="price"
+                                type="number"
+                                class="mt-1 block w-full"
+                                min="0.00"
+                                step="0.01"
+                                :value="$order->price"
+                                :placeholder="__('orders.fields.price')"
+                                required
+                            />
+                        @else
+                            <input type="hidden" name="price" value="{{$order->price}}">
+                            <x-text-input
+                                id="price"
+                                name="price"
+                                type="number"
+                                class="mt-1 block w-full"
+                                min="0.00"
+                                step="0.01"
+                                :value="$order->price"
+                                :placeholder="__('orders.fields.price')"
+                                disabled
+                            />
+                        @endcan
                     </div>
                     <div class="mt-2">
                         <x-btn type="submit">{{ __('actions.submit') }}</x-btn>

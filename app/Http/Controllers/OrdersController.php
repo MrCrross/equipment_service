@@ -31,7 +31,7 @@ class OrdersController extends Controller
     use OrderTrait;
 
     public static array $orderFields = [
-        'status_id',
+        'status_code',
         'equipment_id',
         'master_id',
         'client_id',
@@ -40,7 +40,7 @@ class OrdersController extends Controller
     ];
 
     public static array $filterFields = [
-        'status_id' => [
+        'status_code' => [
             'type' => '',
             'action' => '='
         ],
@@ -248,7 +248,6 @@ class OrdersController extends Controller
             'price' => ['required', 'numeric'],
             'date_repair' => ['date', 'nullable'],
             'equipment_id' => ['required', 'integer', Rule::exists(Equipment::class, 'id')],
-            'status_code' => ['required', 'string', Rule::exists(OrdersStatus::class, 'code')],
         ]);
         $fields = [
             'equipment_id' => $request->post('equipment_id'),
@@ -256,8 +255,19 @@ class OrdersController extends Controller
             'price' => $request->post('price'),
             'date_repair' => $request->post('date_repair'),
             'editor_id' => Auth::id(),
-            'status_code' => $request->post('status_code'),
         ];
+        if ($request->has('status_code')) {
+            $request->validate([
+                'status_code' => ['required', 'string', Rule::exists(OrdersStatus::class, 'code')],
+            ]);
+            $fields['status_code'] = $request->post('status_code');
+        }
+        if ($request->has('master_id')) {
+            $request->validate([
+                'master_id' => ['required', 'integer', Rule::exists(User::class, 'id')],
+            ]);
+            $fields['master_id'] = $request->post('master_id');
+        }
         if ($request->has('client_name')) {
             $request->validate([
                 'client_name' => ['required','string'],
@@ -270,12 +280,6 @@ class OrdersController extends Controller
             }
         } elseif ($request->has('client_id')) {
             $fields['client_id'] = $request->post('client_id');
-        }
-        if ($request->has('master_id')) {
-            $request->validate([
-                'master_id' => ['required', 'integer', Rule::exists(User::class, 'id')],
-            ]);
-            $fields['master_id'] = $request->post('master_id');
         }
         $oldOrder = EquipmentOrder::query()->with(['client', 'master'])->find($id);
         EquipmentOrder::query()->where('id', '=', $id)->update($fields);
@@ -302,7 +306,7 @@ class OrdersController extends Controller
             Mail::to($order->master->email)->send(new AppointmentMaster($order));
         }
 
-        return redirect()->route('orders.index')
+        return redirect()->back()
             ->with('success', __('orders.messages.update'));
     }
 
@@ -342,10 +346,12 @@ class OrdersController extends Controller
             'master',
             'status'
         ])
-            ->where('master_id', '=', Auth::id())
-            ->orWhere('client_id', '=', Auth::id())
-            ->orWhere('creator_id', '=', Auth::id())
-            ->orWhere('editor_id', '=', Auth::id())
+            ->where(function ($where) {
+                $where->where('master_id', '=', Auth::id())
+                    ->orWhere('client_id', '=', Auth::id())
+                    ->orWhere('creator_id', '=', Auth::id())
+                    ->orWhere('editor_id', '=', Auth::id());
+            })
         ;
         $orders = self::filterData($request, $orders);
         $orders = self::orderData($request, $orders);

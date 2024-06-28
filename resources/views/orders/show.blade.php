@@ -5,11 +5,7 @@
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight ">{{ __('orders.headers.view') }}</h2>
             </div>
             <div class="float-right">
-                @can('equipment_orders_view')
-                    <x-a href="{{ route('orders.index') }}">{{ __('actions.back') }}</x-a>
-                @else
-                    <x-a href="{{ route('dashboard') }}">{{ __('actions.back') }}</x-a>
-                @endcan
+                <x-a href="{{ back()->getTargetUrl() }}">{{ __('actions.back') }}</x-a>
             </div>
         </div>
     </x-slot>

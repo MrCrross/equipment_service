@@ -28,15 +28,15 @@
         <div class="grid grid-cols-3 gap-10">
             <div class="">
                 <x-input-label
-                    for="status_id"
+                    for="status_code"
                     :value="__('orders.fields.status')"
                 />
                 <x-select
-                    id="status_id"
-                    name="status_id"
+                    id="status_code"
+                    name="status_code"
                     class="mt-1"
                     :data="$order_statuses_select"
-                    :selected="$filter->status_id ?? 0"
+                    :selected="$filter->status_code ?? 0"
                 />
             </div>
             <div class="">
@@ -96,15 +96,15 @@
         <div class="grid grid-cols-5 gap-10">
             <div>
                 <x-input-label
-                    for="order_status_id"
+                    for="order_status_code"
                     :value="__('orders.fields.status')"
                 />
                 <x-select
-                    id="order_status_id"
-                    name="order_status_id"
+                    id="order_status_code"
+                    name="order_status_code"
                     class="mt-1"
                     :data="$order->default"
-                    :selected="$order->status_id ?? 0"
+                    :selected="$order->status_code ?? 0"
                 />
             </div>
             <div>
@@ -235,11 +235,13 @@
                         @can('equipment_orders_edit')
                             @if(empty($order->deleted_at))
                                 <x-a href="{{ route('orders.edit',$order->id) }}">&#128393;</x-a>
+                                @can('equipment_orders_view-delete')
                                 <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style = "display:inline">
                                     @csrf
                                     @method('DELETE')
                                     <x-btn body="danger" type="submit">&times;</x-btn>
                                 </form>
+                                @endcan
                             @endif
                         @endcan
                     </td>
