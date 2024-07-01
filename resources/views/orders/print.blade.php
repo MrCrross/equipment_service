@@ -27,15 +27,15 @@
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; border: 1px solid black;">
         <tr style="border: 1px solid black;">
             <td style="width:40%; font-size: 14px;border: 1px solid black; padding: 4px;">Клиент:</td>
-            <td style="padding: 4px;border: 1px solid black;">{{$order->client->name}}</td>
+            <td style="padding: 4px;border: 1px solid black;">@if(!empty($order->client)) {{$order->client->name}} @else {{$order->client_name}} @endif</td>
         </tr>
         <tr>
             <td style="width:40%; font-size: 14px;border: 1px solid black; padding: 4px;">E-mail:</td>
-            <td style="padding: 4px;border: 1px solid black;">{{$order->client->email}}</td>
+            <td style="padding: 4px;border: 1px solid black;">@if(!empty($order->client)) {{$order->client->email}} @endif</td>
         </tr>
         <tr>
             <td style="width:40%; font-size: 14px;border: 1px solid black; padding: 4px;">Номер телефона:</td>
-            <td style="padding: 4px;border: 1px solid black;">{{$order->client->phone}}</td>
+            <td style="padding: 4px;border: 1px solid black;">@if(!empty($order->client)) {{$order->client->phone}} @else {{$order->phone}} @endif</td>
         </tr>
     </table>
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; border: 1px solid black;">

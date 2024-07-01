@@ -184,8 +184,7 @@ class OrdersController extends Controller
             'price' => $request->post('price', 0),
             'creator_id' => Auth::id(),
         ];
-        $route = 'orders.index';
-        if ($request->has('client_name')) {
+        if ($request->filled('client_name')) {
             $request->validate([
                 'client_name' => ['required','string'],
                 'phone' => ['required','string'],
@@ -194,17 +193,27 @@ class OrdersController extends Controller
             $fields['phone'] = $request->post('phone');
             $fields['master_id'] = Auth::id();
             $fields['status_code'] = 'diagnostic';
+        } elseif($request->filled('client_id')) {
+            $request->validate([
+                'client_id' => ['required', 'integer', Rule::exists(User::class, 'id')],
+            ]);
+            $fields['client_id'] = $request->post('client_id');
+            $fields['status_code'] = 'draft';
         } else {
             $fields['client_id'] = Auth::id();
             $fields['status_code'] = 'draft';
-            $route = 'dashboard';
         }
         $order = EquipmentOrder::create($fields);
         if (!empty($fields['master_id'])) {
             Mail::to($order->master->email)->send(new AppointmentMaster($order));
         }
 
-        return redirect()->route($route)
+        $redirect = 'dashboard';
+        if (Auth::user()->can('equipment_orders_view')) {
+            $redirect = 'orders.index';
+        }
+
+        return redirect()->route($redirect)
             ->with('success', __('orders.messages.store'));
     }
 
@@ -229,6 +238,7 @@ class OrdersController extends Controller
             && !Auth::user()->can('equipment_orders_edit')
             && $order->creator_id !== Auth::id()
             && $order->master_id !== Auth::id()
+            && $order->client_id !== Auth::id()
         ) {
             return redirect()->route('dashboard');
         }
@@ -282,7 +292,7 @@ class OrdersController extends Controller
             $fields['client_id'] = $request->post('client_id');
         }
         $oldOrder = EquipmentOrder::query()->with(['client', 'master'])->find($id);
-        EquipmentOrder::query()->where('id', '=', $id)->update($fields);
+        EquipmentOrder::updateOrCreate(['id' => $id],$fields);
 
         $order = EquipmentOrder::query()->with(['client', 'master', 'equipment.model.type', 'equipment.model.brand',])->find($id);
         if ($oldOrder->status_code !== $order->status_code) {
@@ -302,11 +312,15 @@ class OrdersController extends Controller
         if ($oldOrder->date_repair !== $order->date_repair && !empty($order->client)) {
             Mail::to($order->client->email)->send(new ChangeDateRepair($oldOrder->date_repair, $order));
         }
-        if ((int)$oldOrder->master_id !== (int)$order->master_id) {
+        if ((int)$oldOrder->master_id !== (int)$order->master_id && !empty($order->master)) {
             Mail::to($order->master->email)->send(new AppointmentMaster($order));
         }
+        $redirect = 'dashboard';
+        if (Auth::user()->can('equipment_orders_view')) {
+            $redirect = 'orders.index';
+        }
 
-        return redirect()->back()
+        return redirect()->route($redirect)
             ->with('success', __('orders.messages.update'));
     }
 

@@ -38,12 +38,12 @@
                     </div>
                     <div class="flex flex-col">
                         <x-input-label
-                            for="type_id"
+                            for="type_code"
                             :value="__('equipment.fields.fields.type')"
                         />
                         <x-select
-                            id="type_id"
-                            name="type_id"
+                            id="type_code"
+                            name="type_code"
                             class="mt-1 block w-full"
                             :data="$types_select"
                             required

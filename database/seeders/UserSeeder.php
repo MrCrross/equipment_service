@@ -98,7 +98,7 @@ class UserSeeder extends Seeder
                 'phone' => '+7(964)659-19-53',
                 'login' => 'root',
                 'password' => Hash::make('qweqwe123'),
-                'email' => 'admin@equipment_service.com',
+                'email' => 'mrcrross38@vk.com',
                 'email_verified_at' => Carbon::now()->toDateTimeString(),
             ],
             [

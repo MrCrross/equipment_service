@@ -92,6 +92,9 @@ class EquipmentOrder extends Model
             'phone' => [
                 'name' => __('orders.fields.phone'),
             ],
+            'price' => [
+                'name' => __('orders.fields.price'),
+            ],
             'status_code' => [
                 'name' => __('orders.fields.status'),
                 'table' => [
@@ -103,6 +106,9 @@ class EquipmentOrder extends Model
             ],
             'description' => [
                 'name' => __('orders.fields.description'),
+            ],
+            'date_repair' => [
+                'name' => __('orders.fields.date_repair'),
             ],
         ];
     }

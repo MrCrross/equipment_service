@@ -76,7 +76,7 @@
 <script src="{{asset('js/templates/UserRoleTemplate.js')}}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        new UserRoleTemplate();
+        new UserRoleTemplate("{{__('actions.search')}}");
     })
     IMask(
         document.getElementById('phone'),

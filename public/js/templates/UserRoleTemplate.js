@@ -4,9 +4,11 @@ class UserRoleTemplate {
     static containerLineSelector = '.container-line-UserRole';
     static lineUserRoleClass = 'line-UserRole';
     static lineUserRoleCloneSelector = '#line-clone-UserRole';
+    static searchText = 'Поиск'
 
-    constructor() {
+    constructor(searchText) {
         UserRoleTemplate.addListeners();
+        UserRoleTemplate.searchText = searchText
     }
 
     static addListeners()
@@ -64,13 +66,19 @@ class UserRoleTemplate {
     static getClone()
     {
         const clone = document.querySelector(UserRoleTemplate.lineUserRoleCloneSelector).cloneNode(true);
+        clone.querySelector('div.nice-select').remove()
         const addBtn = clone.querySelector(UserRoleTemplate.btnAddLineSelector);
         const removeBtn = clone.querySelector(UserRoleTemplate.btnRemoveLineSelector);
+        const select =  clone.querySelector('select#role_id')
         clone.id = '';
         clone.classList.remove('hidden');
         addBtn.remove();
         removeBtn.addEventListener('click', (event) => UserRoleTemplate.removeLine(event));
         removeBtn.classList.remove('hidden');
+        NiceSelect.bind(select, {
+            searchable: true,
+            searchtext: UserRoleTemplate.searchText
+        });
 
         return clone;
     }
